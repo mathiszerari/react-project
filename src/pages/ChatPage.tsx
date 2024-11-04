@@ -20,12 +20,13 @@ export default function ChatPage() {
 
   return (
     <div>
-      <h1>Chat Page</h1>
+      <h1 className="text-3xl my-4 mx-10">Chat Page</h1>
 
       <div className="border m-6 p-4 bg-blue-100 rounded-3xl">
         <div className="border rounded-3xl p-4 bg-blue-50">
           {chats.map((chat) => (
-            <div key={chat.id} className="m-4 flex justify-center ">
+            <div key={chat.id} className="m-4 flex justify-center"
+            onClick={() => { window.location.href = "/chat/" + chat.username }}>
               <div className="flex border w-3/4 p-2 rounded-full">
 
                 <img
