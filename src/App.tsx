@@ -1,25 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Chat from './pages/ChatPage';
+import Home from './pages/HomePage';
+import Friend from './pages/FriendPage';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Routes>
+          // si l'utilisateur est connecté ce routeur sinon un souteur avec uniquement signup et login
+          <Route path="/" element={<Home />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/friends" element={<Friend />} />
+          
+          {/* Catch-all route for undefined paths */}
+          <Route path="*" element={<Chat />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
