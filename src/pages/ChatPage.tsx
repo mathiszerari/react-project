@@ -30,7 +30,7 @@ export default function ChatPage() {
 
   const sendMessage = async (content: string): Promise<void> => {
     const messageId = crypto.randomUUID();
-    await fetch(`${process.env.REACT_APP_API_BASE_URL}chat/${messageId}/send`, {
+    await fetch(`${process.env.REACT_APP_API_BASE_URL}/chat/${messageId}/send`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export default function ChatPage() {
   }
 
   const loadMessages = async(): Promise<void> => {
-    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}messages/${receiverId}/`, {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/messages/${receiverId}/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
