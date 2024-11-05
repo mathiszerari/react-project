@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import data from "../data.json";
+import data from "../mock/user-data.json";
 
 interface Chat {
   id: number;
