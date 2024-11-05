@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { useMessageStore } from "../stores/message.store";
 import Message from "../types/message";
-import {sendMessage, fetchMessages} from "../services/message.service";
+import { sendMessage, fetchMessages, eventFetchMessages } from "../services/message.service";
 import MessagesLoader from "../components/loaders/messages.loader";
 
 export default function ChatPage() {
@@ -34,8 +34,6 @@ export default function ChatPage() {
     reset();
   }
 
-
-
   useEffect(() => {
     if (!receiverId) return;
     const loadMessages = async (): Promise<void> => {
@@ -47,8 +45,18 @@ export default function ChatPage() {
       }
     };
     loadMessages();
-  }, [receiverId]);
 
+    const handleNewMessage = (data: Message) => {
+      console.log("Nouveau message reçu :", data);
+      setLoadedMessages((prevMessages) => [...prevMessages, data]);
+    };
+
+    const eventSource = eventFetchMessages(handleNewMessage);
+
+    return () => {
+      eventSource.close();
+    };
+  }, [receiverId]);
 
   return (
     <MessagesLoader receiverId={receiverId}>
