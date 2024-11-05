@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { useMessageStore } from "../stores/messageStore";
+import Message from "../types/message";
+import { useEffect, useState } from "react";
 
 export default function ChatPage() {
 
@@ -10,8 +12,9 @@ export default function ChatPage() {
   }
 
   const { receiverId } = useParams();
+  const { messages, addMessage } = useMessageStore();
 
-  const { messages } = useMessageStore();
+  const [loadedMessages, setLoadedMessages] = useState<Message[]>([]);
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: {
@@ -20,14 +23,14 @@ export default function ChatPage() {
   })
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    console.log(data.message);
+    addMessage(data.message);
     await sendMessage(data.message);
-    //Add to store
     reset();
   }
 
   const sendMessage = async (content: string): Promise<void> => {
-    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}chat/${receiverId}/send`, {
+    const messageId = crypto.randomUUID();
+    await fetch(`${process.env.REACT_APP_API_BASE_URL}chat/${messageId}/send`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,17 +41,44 @@ export default function ChatPage() {
         content,
       }),
     })
-    console.log(response)
   }
+
+  const loadMessages = async(): Promise<void> => {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}messages/${receiverId}/`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    })
+    const data = await response.json();
+    setLoadedMessages(data);
+  }
+
+  useEffect(() => {
+    loadMessages();
+  }, [receiverId]);
 
   return (
     <div>
       <h1>Chat Page: {receiverId}</h1>
-      <div>{messages}</div>
+
+      <div>
+        {loadedMessages.map((message, index) => (
+          <div key={index}>{message.content}</div>
+        ))}
+      </div>
+
+      <p>--------------------------</p>
+
+      <div>{messages.map((message, index) =>
+        <div key={index}>{message}</div>
+      )}</div>
 
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" placeholder="Tapez votre message ici" {...register('message', { required: true })} />
+        <input type="text" maxLength={255}
+               placeholder="Tapez votre message ici" {...register('message', { required: true })} />
         <input type="submit"/>
       </form>
 
