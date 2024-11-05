@@ -14,8 +14,6 @@ export default function FriendPage() {
       data.forEach((d) => {
         d.requestedAt = timeAgo(d.requestedAt);
       })
-
-      console.log(data);
     }
   
     fetchData();
