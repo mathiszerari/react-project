@@ -45,7 +45,7 @@ export default function FriendPage() {
                   </div>
                 </div>
 
-                <button className="justify-end border px-6 rounded-full mx-32 bg-green-100">Accept</button>
+                <button className="justify-end border px-6 rounded-full mx-24 bg-green-100">Accept</button>
 
               </div>
             </div>
