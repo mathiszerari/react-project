@@ -2,16 +2,19 @@ import { useEffect, useState } from "react";
 import FriendRequest from "../types/friend-request";
 import { dateFormater } from "../utils/dateFormater";
 import FriendRequestCard from "../components/friend-request-card";
+import { fetchFriendRequests } from "../service/friend-request.service";
 
 export default function FriendPage() {
   const [friendRequests, setFriendRequests] = useState<FriendRequest[]>([]);
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch('http://localhost:3000/social/friend-requests', {
-        credentials: 'include'
-      });
-      setFriendRequests(await response.json());
+      async function loadFriendRequests() {
+        const requests = await fetchFriendRequests();
+        setFriendRequests(requests);
+      }
+
+      loadFriendRequests();
 
       friendRequests.forEach((d) => {
         d.requestedAt = dateFormater(d.requestedAt);
