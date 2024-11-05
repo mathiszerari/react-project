@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import FriendRequest from "../types/friend-request";
 
 export default function FriendPage() {
-  const [data, setData] = useState<FriendRequest[]>([]);
+  const [friendRequests, setFriendRequests] = useState<FriendRequest[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       const response = await fetch('http://localhost:3000/social/friend-requests', {
         credentials: 'include'
       });
-      setData(await response.json());
+      setFriendRequests(await response.json());
 
-      data.forEach((d) => {
+      friendRequests.forEach((d) => {
         d.requestedAt = timeAgo(d.requestedAt);
       })
     }
@@ -51,13 +51,13 @@ export default function FriendPage() {
 
           <span className="mx-16 my-6 text-2xl font-bold">Friends Requests</span>
 
-          {data.map((d) => (
-            <div key={d.id} className="m-4 flex justify-center w-3/4 items-center mx-auto ">
+          {friendRequests.map((request) => (
+            <div key={request.id} className="m-4 flex justify-center w-3/4 items-center mx-auto ">
               <div className="flex border justify-between w-full p-2 rounded-full">
 
                 <div className="flex flex-col">
-                  <span> send by : {d.senderId}</span>
-                  <span>{timeAgo(d.requestedAt)}</span>
+                  <span> send by : {request.senderId}</span>
+                  <span>{timeAgo(request.requestedAt)}</span>
                 </div>
 
                 <button className="justify-end border px-6 rounded-full mx-24 bg-green-100">Accept</button>
