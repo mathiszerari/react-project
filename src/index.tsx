@@ -7,6 +7,8 @@ import ChatPage from "./pages/ChatPage";
 import FriendPage from "./pages/FriendPage";
 import App from "./App";
 import "./index.css";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
         element: <FriendPage />,
       },
     ],
+  },
+  {
+    path: "/register",
+    element: <RegisterPage />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
   },
 ]);
 
