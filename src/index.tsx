@@ -9,6 +9,8 @@ import App from "./App";
 import "./index.css";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
+import ProtectedRoute from "./components/ProtectedRoute";
+import GuestRoute from "./components/GuestRoute";
 
 const router = createBrowserRouter([
   {
@@ -16,26 +18,36 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: "/chats",
-        element: <ChatPage />,
-      },
-      {
-        path: "/friends",
-        element: <FriendPage />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            index: true,
+            element: <HomePage />,
+          },
+          {
+            path: "/chats",
+            element: <ChatPage />,
+          },
+          {
+            path: "/friends",
+            element: <FriendPage />,
+          },
+        ],
       },
     ],
   },
   {
-    path: "/register",
-    element: <RegisterPage />,
-  },
-  {
-    path: "/login",
-    element: <LoginPage />,
+    element: <GuestRoute />,
+    children: [
+      {
+        path: "/register",
+        element: <RegisterPage />,
+      },
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
+    ],
   },
 ]);
 
