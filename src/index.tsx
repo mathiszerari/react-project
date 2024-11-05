@@ -1,12 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import reportWebVitals from "./reportWebVitals";
-import HomePage from "./pages/HomePage";
-import ChatPage from "./pages/ChatPage";
-import FriendPage from "./pages/FriendPage";
 import App from "./App";
 import "./index.css";
+import HomePage from "./pages/HomePage";
+import FriendPage from "./pages/FriendPage";
+import ChatListPage from "./pages/ChatListPage";
+import ChatPage from "./pages/ChatPage";
 
 const router = createBrowserRouter([
   {
@@ -19,12 +21,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/chats",
+        element: <ChatListPage />,
+      },
+      {
+        path: "/chats/:receiverId",
         element: <ChatPage />,
       },
       {
         path: "/friends",
         element: <FriendPage />,
       },
+
     ],
   },
 ]);
