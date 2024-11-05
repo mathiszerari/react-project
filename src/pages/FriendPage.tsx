@@ -19,6 +19,11 @@ export default function FriendPage() {
     fetchData();
   }, []);
   
+  /**
+   * A many time ago the request was sended
+   * @param dateString 
+   * @returns  
+   */
   function timeAgo(dateString: string) {
 
     const date = new Date(dateString);
