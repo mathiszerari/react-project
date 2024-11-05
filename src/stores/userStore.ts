@@ -6,19 +6,15 @@ type State = {
 };
 
 type Action = {
-  clearUsername: () => void;
-  clearUserId: () => void;
-  updateUsername: (newUsername: string) => void;
-  updateUserId: (newUserId: string) => void;
+  clearUser: () => void;
+  updateUser: (newUser: State) => void;
   checkUserAuth: () => Promise<boolean>;
 };
 export const useUserStore = create<State & Action>((set) => ({
   username: "",
   userId: "",
-  clearUsername: () => set({ username: "" }),
-  clearUserId: () => set({ userId: "" }),
-  updateUsername: (newUsername: string) => set({ username: newUsername }),
-  updateUserId: (newUserId: string) => set({ userId: newUserId }),
+  clearUser: () => set({ username: "", userId: "" }),
+  updateUser: (newUser) => set(newUser),
   checkUserAuth: async () => {
     const response = await fetch(
       `${process.env.REACT_APP_API_BASE_URL}/auth/me`,
