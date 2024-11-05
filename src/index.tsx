@@ -7,8 +7,8 @@ import App from "./App";
 import "./index.css";
 import HomePage from "./pages/HomePage";
 import FriendPage from "./pages/FriendPage";
-import ChatListPage from "./pages/ChatListPage";
-import ChatPage from "./pages/ChatPage";
+import ChatListPage from "./pages/chat-list.page";
+import ChatPage from "./pages/chat.page";
 
 const router = createBrowserRouter([
   {
