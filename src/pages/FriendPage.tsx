@@ -3,15 +3,18 @@ import FriendRequest from "../types/friend-request";
 import { dateFormater } from "../utils/dateFormater";
 import FriendRequestCard from "../components/friend-request-card";
 import { fetchFriendRequests } from "../service/friend-request.service";
+import Loader from "../components/loader/loader";
 
 export default function FriendPage() {
   const [friendRequests, setFriendRequests] = useState<FriendRequest[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
       async function loadFriendRequests() {
         const requests = await fetchFriendRequests();
         setFriendRequests(requests);
+        setLoading(false);
       }
 
       loadFriendRequests();
@@ -23,9 +26,11 @@ export default function FriendPage() {
   
     fetchData();
   }, []);
-  
+
   return (
     <div>
+      {loading ? <Loader /> : null}
+
       <h1>Friend Page</h1>
 
       <div className="border m-6 p-4 bg-blue-100 rounded-3xl">
