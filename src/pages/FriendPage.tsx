@@ -1,22 +1,47 @@
 import { useEffect, useState } from "react";
-import data from "../mock/user-data.json";
-
-interface Chat {
-  id: number;
-  name: string;
-  username: string;
-  profilePicture: string;
-  createdAt: string;
-}
+import FriendRequest from "../types/friend-request";
 
 export default function FriendPage() {
-  const [friends, setFriends] = useState<Chat[]>([]);
+  const [data, setData] = useState<FriendRequest[]>([]);
 
   useEffect(() => {
-    console.log(data);
-    setFriends(data);
-    
+    async function fetchData() {
+      const response = await fetch('http://localhost:3000/social/friend-requests', {
+        credentials: 'include'
+      });
+      setData(await response.json());
+
+      data.forEach((d) => {
+        d.requestedAt = timeAgo(d.requestedAt);
+      })
+
+      console.log(data);
+    }
+  
+    fetchData();
   }, []);
+  
+  function timeAgo(dateString: string) {
+
+    const date = new Date(dateString);
+    const now = new Date();
+
+    const diffMs = now.getTime() - date.getTime();
+    const diffSec = Math.floor(diffMs / 1000);
+    const diffMin = Math.floor(diffSec / 60);
+    const diffHeure = Math.floor(diffMin / 60);
+    const diffJour = Math.floor(diffHeure / 24);
+
+    if (diffJour > 0) {
+        return `${diffJour} day${diffJour > 1 ? 's' : ''} ago`;
+    } else if (diffHeure > 0) {
+        return ` ${diffHeure} hour${diffHeure > 1 ? 's' : ''} ago`;
+    } else if (diffMin > 0) {
+        return `${diffMin} minute${diffMin > 1 ? 's' : ''} ago`;
+    } else {
+        return `${diffSec} second${diffSec > 1 ? 's' : ''} ago`;
+    }
+}
 
   
   return (
@@ -28,21 +53,13 @@ export default function FriendPage() {
 
           <span className="mx-16 my-6 text-2xl font-bold">Friends Requests</span>
 
-          {friends.map((friend) => (
-            <div key={friend.id} className="m-4 flex justify-center w-3/4 items-center mx-auto ">
+          {data.map((d) => (
+            <div key={d.id} className="m-4 flex justify-center w-3/4 items-center mx-auto ">
               <div className="flex border justify-between w-full p-2 rounded-full">
 
-                <div className="flex">
-                  <img
-                    src={friend.profilePicture + friend.username}
-                    alt="profile"
-                    className="w-12 h-12 rounded-full"
-                  />
-
-                  <div className="ml-4">
-                    <h2>{friend.name}</h2>
-                    <p>{friend.username}</p>
-                  </div>
+                <div className="flex flex-col">
+                  <span> send by : {d.senderId}</span>
+                  <span>{timeAgo(d.requestedAt)}</span>
                 </div>
 
                 <button className="justify-end border px-6 rounded-full mx-24 bg-green-100">Accept</button>
@@ -50,20 +67,6 @@ export default function FriendPage() {
               </div>
             </div>
           ))}
-
-          <span className="mt-8 mx-16 my-6 text-2xl font-bold">{friends.length} Friends</span>
-
-          <div className="px-32 grid grid-cols-* grid-flow-col gap-4">
-            {friends.map((friend) => (
-              <div key={friend.id}>
-                <img
-                  src={friend.profilePicture + friend.username}
-                  alt="profile"
-                  className="w-12 h-12 rounded-full"
-                />
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </div>
