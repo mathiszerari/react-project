@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../services/auth.service";
 import AuthForm from "../components/forms/auth.form";
-import { UserDTO } from "../types/user-dto";
+import { UserDTO } from "../dtos/user.dto";
 
 export default function LoginPage() {
   const navigate = useNavigate();
