@@ -10,7 +10,7 @@ export default function AddFriend() {
 
   const user = useUserStore();
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       content: ""
     }

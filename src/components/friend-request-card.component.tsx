@@ -7,6 +7,26 @@ export default function FriendRequestCard(request: FriendRequest) {
   async function acceptFriendRequest() {
     await acceptRequest(request.id.toString());
 
+    const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+    console.log(notifications);
+
+    console.log(request.id);
+    
+    
+    // changer la valeur de didIAccept a true
+    const updatedNotifications = notifications.map((notification: any) => {
+      console.log(updatedNotifications);
+      if (notification.id === request.id) {
+        return {
+          ...notification,
+          didIAccept: true
+        };
+      }
+      return notification;
+    });
+    
+    localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+
     window.location.reload();
   }
 

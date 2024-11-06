@@ -13,30 +13,29 @@ export default function App() {
       emitterId: request.senderId,
       content: request.senderId + ' asked you in friend',
       receivedAt: request.requestedAt,
+      didIAccept: false
     }
-
-    console.log(notification);
-
-    //TODO stocker les données dans le localStorage
+    const existingNotifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+    const updatedNotifications = [notification, ...existingNotifications];
+    localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
   }    
-
-  function saveAcceptedRequest(request: string) {
+  
+  function saveAcceptedRequest(request: any) {
     const notification: Notification = {
       id: crypto.randomUUID(),
       type: "friend-request-accepted",
-      emitterId: request,
-      content: request + ' accepted to be your friend',
+      emitterId: request.userId,
+      content: request.userId + ' accepted to be your friend',
       receivedAt: new Date().toISOString(),
     }
-
-    console.log(notification);
-
-    //TODO stocker les données dans le localStorage
-  }    
+    const existingNotifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+    const updatedNotifications = [notification, ...existingNotifications];
+    localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+  }
 
   useEffect(() => {
     const handleNewFriendRequest = (request: any) => {
-      saveAcceptedRequest(request);
+      saveReceivedRequest(request);
     }
 
     const eventSource = eventFetchFriendRequests(handleNewFriendRequest);
@@ -47,11 +46,8 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    console.log("notifications");
-    
     const handleAcceptedFriendRequest = (request: any) => {
-      saveReceivedRequest(request);
-      console.log("success");
+      saveAcceptedRequest(request);
     }
 
     const eventSource = eventAcceptedFriendRequest(handleAcceptedFriendRequest);

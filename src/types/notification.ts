@@ -4,4 +4,5 @@ export default interface Notification {
   emitterId?: string;
   content?: string;
   receivedAt: string;
+  didIAccept?: boolean;
 }
