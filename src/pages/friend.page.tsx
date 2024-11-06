@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import FriendRequest from "../types/friend-request";
 import FriendRequestCard from "../components/friend-request-card.component";
 import { fetchFriendRequests } from "../services/friend-request.service";
 import Loader from "../components/loader/loader.component";
+import { FriendRequest } from "../types/friend-request";
 
 export default function FriendPage() {
   const [friendRequests, setFriendRequests] = useState<FriendRequest[]>([]);
