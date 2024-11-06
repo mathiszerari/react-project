@@ -7,6 +7,7 @@ import Message from "../types/message";
 import { sendMessage, fetchMessages, eventFetchMessages } from "../services/message.service";
 import MessagesLoader from "../components/loaders/messages.loader";
 import { MessageDTO } from "../dtos/message.dto";
+import { dateFormater } from "../utils/dateFormater";
 
 export default function ChatPage() {
 
@@ -18,7 +19,7 @@ export default function ChatPage() {
 
   const { receiverId } = useParams();
 
-  const { messages, setMessages, addMessage } = useMessageStore();
+  const { messages, setMessages, addMessage, updateLastMessage } = useMessageStore();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: {
@@ -28,9 +29,18 @@ export default function ChatPage() {
 
   const onSubmit: SubmitHandler<FormInputs> = async (input) => {
     if (!receiverId) return;
-    const message: MessageDTO = { id: crypto.randomUUID(), content: input.content, receiverId: receiverId };
+    const message: MessageDTO = {id: "", content: input.content, receiverId: receiverId, emitterId: "", sendAt: (new Date()).toISOString()};
     addMessage(message);
-    await sendMessage(message);
+
+    try {
+      await sendMessage(message);
+    }
+    catch (error) {
+      navigate('/');
+    }
+
+    const messages = await fetchMessages(receiverId);
+    setMessages(messages);
     reset();
   }
 
@@ -65,7 +75,9 @@ export default function ChatPage() {
 
         <div>
           {messages.map((message, index) => (
-            <div key={index}>{message.content}</div>
+            <div key={index}>
+              {`${message.content} : ${dateFormater(message.sendAt)}`}
+            </div>
           ))}
         </div>
 
