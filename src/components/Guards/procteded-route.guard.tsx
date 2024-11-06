@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { useUserStore } from "../../stores/userStore";
+import { useUserStore } from "../../stores/user.store";
 import { useEffect } from "react";
 
 export default function ProtectedRoute() {
