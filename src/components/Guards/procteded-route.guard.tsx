@@ -5,12 +5,14 @@ import { useEffect } from "react";
 export default function ProtectedRoute() {
   const checkUserAuth = useUserStore((state) => state.checkUserAuth);
   const navigate = useNavigate();
+
   const checkAuth = async () => {
     const isAuth = await checkUserAuth();
     if (!isAuth) {
       navigate("/login");
     }
   };
+
   useEffect(() => {
     checkAuth();
   }, []);
