@@ -3,7 +3,7 @@ import FriendRequest from "../types/friend-request";
 import { dateFormater } from "../utils/dateFormater";
 import FriendRequestCard from "../components/friend-request-card";
 import { fetchFriendRequests } from "../services/friend-request.service";
-import Loader from "../components/loader/loader";
+import Loader from "../components/loader/loader.component";
 
 export default function FriendPage() {
   const [friendRequests, setFriendRequests] = useState<FriendRequest[]>([]);
