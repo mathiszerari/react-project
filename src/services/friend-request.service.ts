@@ -1,3 +1,4 @@
+import { FriendRequestAcceptedDTO } from "../dtos/friend-request-accepted.dto";
 import { FriendRequest } from "../types/friend-request";
 
 export async function fetchFriendRequests() {
@@ -24,7 +25,7 @@ export const eventFetchFriendRequests = (onRequestReceived: (data: {userId: stri
   return eventSource;
 }
 
-export const eventAcceptedFriendRequest = (onRequestAccepted: (data: FriendRequest) => void) => {
+export const eventAcceptedFriendRequest = (onRequestAccepted: (data: FriendRequestAcceptedDTO) => void) => {
   const eventSource = new EventSource(`${process.env.REACT_APP_API_BASE_URL}/notifications`, { withCredentials: true })
   eventSource.addEventListener('friend-request-accepted', (event) => {
     const data = JSON.parse(event.data);
