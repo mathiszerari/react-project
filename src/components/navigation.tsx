@@ -16,7 +16,6 @@ export default function Navigation() {
     <div className="mt-6 mx-64 border h-16 flex flex-row justify-around items-center rounded-full">
       <Link to="/chats">Chats</Link>
       <Link to="/friends">Friends</Link>
-      <Link to="/settings">Settings</Link>
       <Link to="/login" onClick={handleLogout}>
         Logout
       </Link>
