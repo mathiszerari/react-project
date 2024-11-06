@@ -1,4 +1,4 @@
-import { UserDTO } from "../types/userDto";
+import { UserDTO } from "../types/user-dto";
 
 export async function loginUser(data: UserDTO) {
   const response = await fetch(

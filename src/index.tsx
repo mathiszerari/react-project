@@ -2,15 +2,15 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/home.page";
 import ChatPage from "./pages/ChatPage";
 import FriendPage from "./pages/FriendPage";
 import App from "./App";
 import "./index.css";
-import RegisterPage from "./pages/RegisterPage";
-import LoginPage from "./pages/LoginPage";
-import ProtectedRoute from "./components/ProtectedRoute";
-import GuestRoute from "./components/GuestRoute";
+import RegisterPage from "./pages/register.page";
+import LoginPage from "./pages/login.page";
+import ProtectedRoute from "./components/Guard/procteded-route.guard";
+import GuestRoute from "./components/Guard/guest-route.guard";
 
 const router = createBrowserRouter([
   {
