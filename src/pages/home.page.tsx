@@ -1,21 +1,24 @@
-import { useEffect, useState } from "react";
-import { Friend } from "../types/friend";
+import { useEffect } from "react";
 import { getUserFriends } from "../services/friend.service";
 import { useNavigate } from "react-router-dom";
+import { useFriendStore } from "../stores/friend.store";
 
 export default function HomePage() {
-  const [friends, setFriends] = useState<Friend[]>([]);
+  const { friends, setFriends } = useFriendStore();
 
-  const fetchFriends = async () => {
-    const friendList = await getUserFriends();
-    setFriends(friendList);
+  const loadFriends = async () => {
+    if (friends.length === 0) {
+      const friends = await getUserFriends();
+      setFriends(friends);
+    }
   };
 
   const sortedByDateFriendsList = friends.sort((a, b) => {
     return new Date(b.startedAt).getTime() - new Date(a.startedAt).getTime();
   });
+
   useEffect(() => {
-    fetchFriends();
+    loadFriends();
   }, []);
 
   const navigate = useNavigate();
