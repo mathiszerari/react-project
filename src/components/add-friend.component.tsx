@@ -9,26 +9,16 @@ type FormInputs = {
 
 export default function AddFriend() {
 
-  const idTemp = "7f1c5ce0-a094-4ae3-b03a-669db1770eed"
-
-  const { username, clearUser, updateUser } = useUserStore();
+  const user = useUserStore();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: {
       content: ""
     }
   })
-  
-  useEffect(() => {
-    console.log(username)
-  }, []);
 
   const onSubmit: SubmitHandler<FormInputs> = async (input) => {
-    console.log("me", idTemp);
-    console.log("to", input.content);
-    
     await sendFriendRequest(input.content);
-    
     reset();
   }
 
@@ -38,10 +28,10 @@ export default function AddFriend() {
       
       <div>
         <span>Your ID: </span>
-        <span> {idTemp} </span>
+        <span> {user.id} </span>
         <button
           type="button"
-          onClick={() => navigator.clipboard.writeText(idTemp)}>
+          onClick={() => navigator.clipboard.writeText(user.id)}>
           copy id
         </button>
       </div>

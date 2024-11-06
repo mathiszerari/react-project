@@ -1,5 +1,4 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { checkUserAuth, getCurrentUser } from "../../services/auth.service";
 import { useUserStore } from "../../stores/user.store";
 import { useFriendStore } from "../../stores/friend.store";
