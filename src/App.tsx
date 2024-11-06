@@ -15,12 +15,13 @@ export default function App() {
       receivedAt: request.requestedAt,
     }
 
+    console.log(notification);
+
     //TODO stocker les données dans le localStorage
   }    
 
   useEffect(() => {
     const handleNewFriendRequest = (request: any) => {
-      console.log("request", request);
       saveReceivedRequest(request);
     }
 
