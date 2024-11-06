@@ -63,7 +63,7 @@ export default function ChatPage() {
   }
 
   const retryMessage = async (message: Message) => {
-    //TODO: Implementer la fonctionnalité de retry
+    console.log(message);
   }
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export default function ChatPage() {
             message.error ? (
                 <div key={index} style={{ color: "green" }}>
                   {`${message.content} : ${dateFormater(message.sendAt)}`}
-                  <button onClick={() => console.log("aaaa")}>Retry</button>
+                  <button onClick={() => retryMessage(message)}>Retry</button>
                 </div>
               ) :
               message.receiverId === receiverId ? (
