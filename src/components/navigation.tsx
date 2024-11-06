@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { logoutUser } from "../services/auth.service";
 
 export default function Navigation() {
   return (
@@ -7,6 +8,9 @@ export default function Navigation() {
       <Link to="/chats">Chats</Link>
       <Link to="/friends">Friends</Link>
       <Link to="/settings">Settings</Link>
+      <Link to="/login" onClick={logoutUser}>
+        Logout
+      </Link>
     </div>
   );
 }
