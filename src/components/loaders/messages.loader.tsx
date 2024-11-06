@@ -1,19 +1,13 @@
-import { ReactNode, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
+import { MessageService } from "../../services/message.service";
 
-type LoaderProps = {
-  receiverId?: string;
-  children: ReactNode;
+export const MessagesLoader = async ({ params }: { params: Record<string, string | undefined> }) => {
+  const messageService = new MessageService();
+  try {
+    const { receiverId } = params;
+    if (!receiverId) throw new Error("Receiver ID missing");
+    return await messageService.fetchMessages(receiverId);
+  } catch (error) {
+    return redirect('/');
+  }
 };
-
-export default function MessagesLoader({ receiverId, children }: LoaderProps) {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!receiverId) {
-      navigate('/');
-    }
-  }, [receiverId, navigate]);
-
-  return <>{children}</>;
-}

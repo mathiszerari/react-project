@@ -1,10 +1,10 @@
 import Message from "../types/message";
 import { MessageAdapter } from "../adapters/message.adapter";
+import { BadRequestError } from "../errors/bad-request.error";
 
 export class MessageService implements MessageAdapter {
    sendMessage = async (message: Message): Promise<void> => {
-    const messageId= crypto.randomUUID()
-    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/chat/${messageId}/send`, {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/chat/${message.id}/send`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -16,8 +16,13 @@ export class MessageService implements MessageAdapter {
       }),
     })
     //TODO: Gérer plusieurs erreurs dont erreur connexion
-    if (!response.ok) {
-      throw new Error(`Error ${response.status}: ${response.statusText}`);
+    if (response.status === 400) {
+      throw new BadRequestError("You are not friend with this user");
+    }
+    else {
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
     }
   }
 

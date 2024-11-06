@@ -4,4 +4,5 @@ export default interface Message {
   receiverId: string;
   content: string;
   sendAt: string;
+  error?: boolean;
 }
