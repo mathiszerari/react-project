@@ -11,7 +11,7 @@ export default function AddFriend() {
 
   const idTemp = "7f1c5ce0-a094-4ae3-b03a-669db1770eed"
 
-  const { username, userId, clearUser, updateUser } = useUserStore();
+  const { username, clearUser, updateUser } = useUserStore();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: {
@@ -21,7 +21,6 @@ export default function AddFriend() {
   
   useEffect(() => {
     console.log(username)
-    console.log(userId)
   }, []);
 
   const onSubmit: SubmitHandler<FormInputs> = async (input) => {
