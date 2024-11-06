@@ -1,4 +1,4 @@
-import FriendRequest from "../types/friend-request";
+import { FriendRequest } from "../types/friend-request";
 
 export async function fetchFriendRequests() {
   const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/social/friend-requests`, {

@@ -1,4 +1,4 @@
-import FriendRequest from "../types/friend-request";
+import { FriendRequest } from "../types/friend-request";
 import { dateFormater } from "../utils/dateFormater";
 
 export default function FriendRequestCard(request: FriendRequest) {
