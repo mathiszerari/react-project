@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import "./index.css";
@@ -12,8 +11,8 @@ import HomePage from "./pages/home.page";
 import ChatListPage from "./pages/chat-list.page";
 import ChatPage from "./pages/chat.page";
 import FriendPage from "./pages/friend.page";
-import ProtectedRoute from "./components/guards/procteded-route.guard";
-import GuestRoute from "./components/guards/guest-route.guard";
+import ProtectedRoute from "./components/guardss/procteded-route.guard";
+import GuestRoute from "./components/guardss/guest-route.guard";
 
 const router = createBrowserRouter([
   {
@@ -54,7 +53,6 @@ const router = createBrowserRouter([
         path: "/login",
         element: <LoginPage />,
       },
-
     ],
   },
 ]);
