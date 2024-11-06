@@ -5,8 +5,7 @@ export async function fetchFriendRequests() {
     credentials: 'include'
   });
   const friendRequests = await response.json();
-
-  // Formatez la date pour chaque demande d'ami
+  
   return friendRequests.map((request: FriendRequest) => ({
     ...request,
   }));
