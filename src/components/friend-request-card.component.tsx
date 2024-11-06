@@ -1,7 +1,13 @@
+import { acceptRequest } from "../services/friend-request.service";
 import { FriendRequest } from "../types/friend-request";
 import { dateFormater } from "../utils/dateFormater";
 
 export default function FriendRequestCard(request: FriendRequest) {
+
+  function acceptFriendRequest() {
+    acceptRequest(request.id.toString());
+  }
+
   return (
     <div key={request.id} className="m-4 flex justify-center w-3/4 items-center mx-auto ">
       <div className="flex border justify-between w-full p-2 rounded-full">
@@ -11,7 +17,9 @@ export default function FriendRequestCard(request: FriendRequest) {
           <span>{dateFormater(request.requestedAt)}</span>
         </div>
 
-        <button className="justify-end border px-6 rounded-full mx-24 bg-green-100">Accept</button>
+        <button
+          className="justify-end border px-6 rounded-full mx-24 bg-green-100"
+          onClick={acceptFriendRequest}>Accept</button>
 
       </div>
     </div>
