@@ -6,7 +6,6 @@ import { useMessageStore } from "../stores/message.store";
 import Message from "../types/message";
 import { sendMessage, fetchMessages, eventFetchMessages } from "../services/message.service";
 import MessagesLoader from "../components/loaders/messages.loader";
-import { MessageDTO } from "../dtos/message.dto";
 import { dateFormater } from "../utils/dateFormater";
 
 export default function ChatPage() {
@@ -29,7 +28,7 @@ export default function ChatPage() {
 
   const onSubmit: SubmitHandler<FormInputs> = async (input) => {
     if (!receiverId) return;
-    const message: MessageDTO = {id: "", content: input.content, receiverId: receiverId, emitterId: "", sendAt: (new Date()).toISOString()};
+    const message: Message = {id: "", content: input.content, receiverId: receiverId, emitterId: "", sendAt: (new Date()).toISOString()};
     addMessage(message);
 
     try {
@@ -71,15 +70,20 @@ export default function ChatPage() {
     <MessagesLoader receiverId={receiverId}>
 
       <div>
-        <h1>Chat Page: {receiverId}</h1>
-
         <div>
           {messages.map((message, index) => (
-            <div key={index}>
-              {`${message.content} : ${dateFormater(message.sendAt)}`}
-            </div>
+            message.receiverId === receiverId ? (
+              <div key={index} style={{ color: "blue" }}>
+                {`${message.content} : ${dateFormater(message.sendAt)}`}
+              </div>
+            ) : (
+              <div key={index} style={{ color: "red" }}>
+                {`${message.content} : ${dateFormater(message.sendAt)}`}
+              </div>
+            )
           ))}
         </div>
+
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <input type="text" maxLength={255}
