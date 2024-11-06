@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../services/auth.service";
-import AuthForm from "../components/Form/auth.form";
+import AuthForm from "../components/Forms/auth.form";
 import { UserDTO } from "../types/user-dto";
 
 export default function RegisterPage() {
