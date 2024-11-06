@@ -4,9 +4,12 @@ import { useEffect } from "react";
 
 import { useMessageStore } from "../stores/message.store";
 import Message from "../types/message";
-import { sendMessage, fetchMessages, eventFetchMessages } from "../services/message.service";
+import { FalseMessageService, MessageService } from "../services/message.service";
 import MessagesLoader from "../components/loaders/messages.loader";
 import { dateFormater } from "../utils/dateFormater";
+import { MessageAdapter } from "../adapters/message.adapter";
+
+const messageService : MessageAdapter = new FalseMessageService();
 
 export default function ChatPage() {
 
@@ -32,13 +35,13 @@ export default function ChatPage() {
     addMessage(message);
 
     try {
-      await sendMessage(message);
+      await messageService.sendMessage(message);
     }
     catch (error) {
       navigate('/');
     }
 
-    const messages = await fetchMessages(receiverId);
+    const messages = await messageService.fetchMessages(receiverId);
     setMessages(messages);
     reset();
   }
@@ -47,7 +50,7 @@ export default function ChatPage() {
     if (!receiverId) return;
     const loadMessages = async (): Promise<void> => {
       try {
-        const messages = await fetchMessages(receiverId);
+        const messages = await messageService.fetchMessages(receiverId);
         setMessages(messages);
       } catch (error) {
         navigate('/chats');
@@ -59,7 +62,7 @@ export default function ChatPage() {
       addMessage(message);
     };
 
-    const eventSource = eventFetchMessages(handleNewMessage);
+    const eventSource = messageService.eventFetchMessages(handleNewMessage);
 
     return () => {
       eventSource.close();
