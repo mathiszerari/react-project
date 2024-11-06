@@ -1,36 +1,36 @@
 import {useNavigate, useParams} from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { useMessageStore } from "../stores/message.store";
 import Message from "../types/message";
 import { sendMessage, fetchMessages, eventFetchMessages } from "../services/message.service";
 import MessagesLoader from "../components/loaders/messages.loader";
+import { MessageDTO } from "../dtos/message.dto";
 
 export default function ChatPage() {
 
   type FormInputs = {
-    message: string;
+    content: string;
   }
 
   const navigate = useNavigate();
 
   const { receiverId } = useParams();
 
-  const { messages, addMessage } = useMessageStore();
-
-  const [loadedMessages, setLoadedMessages] = useState<Message[]>([]);
+  const { messages, setMessages, addMessage } = useMessageStore();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: {
-      message: ""
+      content: ""
     }
   })
 
-  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+  const onSubmit: SubmitHandler<FormInputs> = async (input) => {
     if (!receiverId) return;
-    addMessage(data.message);
-    await sendMessage(receiverId, data.message);
+    const message: MessageDTO = { id: crypto.randomUUID(), content: input.content, receiverId: receiverId };
+    addMessage(message);
+    await sendMessage(message);
     reset();
   }
 
@@ -39,16 +39,15 @@ export default function ChatPage() {
     const loadMessages = async (): Promise<void> => {
       try {
         const messages = await fetchMessages(receiverId);
-        setLoadedMessages(messages);
+        setMessages(messages);
       } catch (error) {
         navigate('/chats');
       }
     };
     loadMessages();
 
-    const handleNewMessage = (data: Message) => {
-      console.log("Nouveau message reçu :", data);
-      setLoadedMessages((prevMessages) => [...prevMessages, data]);
+    const handleNewMessage = (message: Message) => {
+      addMessage(message);
     };
 
     const eventSource = eventFetchMessages(handleNewMessage);
@@ -65,21 +64,14 @@ export default function ChatPage() {
         <h1>Chat Page: {receiverId}</h1>
 
         <div>
-          {loadedMessages.map((message, index) => (
+          {messages.map((message, index) => (
             <div key={index}>{message.content}</div>
           ))}
         </div>
 
-        <p>--------------------------</p>
-
-        <div>{messages.map((message, index) =>
-          <div key={index}>{message}</div>
-        )}</div>
-
-
         <form onSubmit={handleSubmit(onSubmit)}>
           <input type="text" maxLength={255}
-                 placeholder="Tapez votre message ici" {...register('message', { required: true })} />
+                 placeholder="Tapez votre message ici" {...register('content', { required: true })} />
           <input type="submit"/>
         </form>
 
