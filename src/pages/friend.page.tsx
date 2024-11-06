@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FriendRequestCard from "../components/friend-request-card.component";
 import { fetchFriendRequests } from "../services/friend-request.service";
-import Loader from "../components/loader/loader.component";
+import Loader from "../components/loaders/loader.component";
 import { FriendRequest } from "../types/friend-request";
 
 export default function FriendPage() {
