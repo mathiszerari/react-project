@@ -3,11 +3,10 @@ import Navigation from "./components/navigation";
 import { useEffect } from "react";
 import Notification from "./types/notification";
 import { eventFetchFriendRequests } from "./services/friend-request.service";
-import { FriendRequest } from "./types/friend-request";
 
 export default function App() {
 
-  function saveReceivedRequest(request: FriendRequest) {
+  function saveReceivedRequest(request: any) {
     const notification: Notification = {
       id: request.id,
       type: "friend-request-received",
@@ -20,7 +19,7 @@ export default function App() {
   }    
 
   useEffect(() => {
-    const handleNewFriendRequest = (request: any) => () => {
+    const handleNewFriendRequest = (request: any) => {
       console.log("request", request);
       saveReceivedRequest(request);
     }

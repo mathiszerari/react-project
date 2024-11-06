@@ -12,6 +12,28 @@ export async function fetchFriendRequests() {
   }));
 }
 
+export const sendFriendRequest = async (receiverId: string) => {
+  const randomuuid = crypto.randomUUID(); 
+  const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/social/friend-request/${randomuuid}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ receiverId: receiverId }),
+  })
+}
+
+export const acceptRequest = async (requestId: string) => {
+  const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/social/friend-request/${requestId}/accept`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  })
+}
+
 export const eventFetchFriendRequests = (onRequestReceived: (data: FriendRequest) => void) => {
   const eventSource = new EventSource(`${process.env.REACT_APP_API_BASE_URL}/notifications`, { withCredentials: true })
   eventSource.addEventListener('friend-request-received', (event) => {
@@ -36,26 +58,4 @@ export const eventAcceptedFriendRequest = (onRequestAccepted: (data: FriendReque
     eventSource.close();
   };
   return eventSource;
-}
-
-export const sendFriendRequest = async (receiverId: string) => {
-  const randomuuid = crypto.randomUUID(); 
-  const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/social/friend-request/${randomuuid}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-    body: JSON.stringify({ receiverId: receiverId }),
-  })
-}
-
-export const acceptRequest = async (requestId: string) => {
-  const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/social/friend-request/${requestId}/accept`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-  })
 }
