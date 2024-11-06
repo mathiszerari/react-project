@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import HomePage from "./pages/HomePage";
 import ChatPage from "./pages/ChatPage";
-import FriendPage from "./pages/friend-page.page";
+import FriendPage from "./pages/friend.page";
 import App from "./App";
 import "./index.css";
 
