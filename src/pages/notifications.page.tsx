@@ -16,6 +16,19 @@ export default function NotificationListPage() {
       setFriends(fetchedFriends);
       
       const updatedNotifications = parsedNotifications.map((notification: Notification) => {
+        if (notification.status === "my-friend-request-accepted") {
+          const selectedFriend = fetchedFriends.find(
+            (friend: Friend) => friend.userId === notification.emitterId
+          );
+          
+          if (selectedFriend) {
+            return {
+              ...notification,
+              status: "friend-accepted",
+              emitterUsername: selectedFriend.username
+            };
+          }
+        }
         if (notification.didIAccept) {
           const selectedFriend = fetchedFriends.find(
             (friend: Friend) => friend.userId === notification.emitterId
