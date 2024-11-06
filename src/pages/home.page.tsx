@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Friend } from "../types/friends";
-import { getUserFriends } from "../services/friends.service";
+import { Friend } from "../types/friend";
+import { getUserFriends } from "../services/friend.service";
 import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {

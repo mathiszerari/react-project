@@ -1,4 +1,4 @@
-import { Friend } from "../types/friends";
+import { Friend } from "../types/friend";
 
 export const getUserFriends = async (): Promise<Friend[]> => {
   const response = await fetch(
