@@ -1,7 +1,6 @@
 import Message from "../types/message";
-import { MessageDTO } from "../dtos/message.dto";
 
-export const sendMessage = async (message: MessageDTO): Promise<void> => {
+export const sendMessage = async (message: Message): Promise<void> => {
   const messageId= crypto.randomUUID()
   const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/chat/${messageId}/send`, {
     method: 'POST',
