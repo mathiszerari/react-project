@@ -4,8 +4,10 @@ import { dateFormater } from "../utils/dateFormater";
 
 export default function FriendRequestCard(request: FriendRequest) {
 
-  function acceptFriendRequest() {
-    acceptRequest(request.id.toString());
+  async function acceptFriendRequest() {
+    await acceptRequest(request.id.toString());
+
+    window.location.reload();
   }
 
   return (
