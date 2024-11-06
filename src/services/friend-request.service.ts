@@ -24,6 +24,19 @@ export const eventFetchFriendRequests = (onRequestReceived: (data: FriendRequest
   return eventSource;
 }
 
+export const eventAcceptedFriendRequest = (onRequestAccepted: (data: FriendRequest) => void) => {
+  const eventSource = new EventSource(`${process.env.REACT_APP_API_BASE_URL}/notifications`, { withCredentials: true })
+  eventSource.addEventListener('friend-request-accepted', (event) => {
+    const data = JSON.parse(event.data);
+    onRequestAccepted(data);
+  })
+
+  eventSource.onerror = (error) => {
+    eventSource.close();
+  };
+  return eventSource;
+}
+
 export const sendFriendRequest = async (receiverId: string) => {
   const randomuuid = crypto.randomUUID(); 
   const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/social/friend-request/${randomuuid}`, {
