@@ -12,13 +12,13 @@ export async function fetchFriendRequests() {
   }));
 }
 
-export const eventFetchFriendRequests = (onRequestReceived: (data: {userId: string}) => void) => {
+export const eventFetchFriendRequests = (onRequestReceived: (data: FriendRequest) => void) => {
   const eventSource = new EventSource(`${process.env.REACT_APP_API_BASE_URL}/notifications`, { withCredentials: true })
   eventSource.addEventListener('friend-request-received', (event) => {
     const data = JSON.parse(event.data);
+    console.log(data);
     onRequestReceived(data);
   })
-
   eventSource.onerror = (error) => {
     eventSource.close();
   };

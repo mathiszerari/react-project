@@ -13,6 +13,7 @@ import ChatPage from "./pages/chat.page";
 import FriendPage from "./pages/friend.page";
 import ProtectedRoute from "./components/guards/procteded-route.guard";
 import GuestRoute from "./components/guards/guest-route.guard";
+import NotificationListPage from "./pages/notifications.page";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
           {
             path: "/friends",
             element: <FriendPage />,
+          },
+          {
+            path: "/notifications",
+            element: <NotificationListPage />,
           },
         ],
       },

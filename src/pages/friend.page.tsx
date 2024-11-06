@@ -11,6 +11,16 @@ export default function FriendPage() {
 
   useEffect(() => {
     loadInitialRequests();
+
+    const handleNewFriendRequest = (data: any) => {
+      setFriendRequests(prevRequests => {return [data, ...prevRequests];});
+    };
+
+    const eventSource = eventFetchFriendRequests(handleNewFriendRequest);
+
+    return () => {
+      eventSource.close();
+    };
   }, []); 
   
   async function loadInitialRequests() {
