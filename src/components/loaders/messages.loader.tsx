@@ -11,7 +11,7 @@ export default function MessagesLoader({ receiverId, children }: LoaderProps) {
 
   useEffect(() => {
     if (!receiverId) {
-      navigate('/chats');
+      navigate('/');
     }
   }, [receiverId, navigate]);
 

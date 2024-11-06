@@ -1,16 +1,16 @@
 import Message from "../types/message";
+import { MessageDTO } from "../dtos/message.dto";
 
-export const sendMessage = async (receiverId: string, content: string): Promise<void> => {
-  const messageId = crypto.randomUUID();
-  await fetch(`${process.env.REACT_APP_API_BASE_URL}/chat/${messageId}/send`, {
+export const sendMessage = async (message: MessageDTO): Promise<void> => {
+  await fetch(`${process.env.REACT_APP_API_BASE_URL}/chat/${message.id}/send`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
     body: JSON.stringify({
-      receiverId,
-      content,
+      receiverId: message.receiverId,
+      content: message.content,
     }),
   })
 }
