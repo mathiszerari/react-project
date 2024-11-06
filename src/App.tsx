@@ -11,9 +11,9 @@ export default function App() {
       id: request.id,
       type: "friend-request-received",
       emitterId: request.senderId,
-      content: request.senderId + ' asked you in friend',
       receivedAt: request.requestedAt,
-      didIAccept: false
+      didIAccept: false,
+      status: "pending-request",
     }
     const existingNotifications = JSON.parse(localStorage.getItem('notifications') || '[]');
     const updatedNotifications = [notification, ...existingNotifications];
@@ -25,8 +25,8 @@ export default function App() {
       id: crypto.randomUUID(),
       type: "friend-request-accepted",
       emitterId: request.userId,
-      content: request.userId + ' accepted to be your friend',
       receivedAt: new Date().toISOString(),
+      status: "my-friend-request-accepted",
     }
     const existingNotifications = JSON.parse(localStorage.getItem('notifications') || '[]');
     const updatedNotifications = [notification, ...existingNotifications];

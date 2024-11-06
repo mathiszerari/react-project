@@ -8,14 +8,8 @@ export default function FriendRequestCard(request: FriendRequest) {
     await acceptRequest(request.id.toString());
 
     const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
-    console.log(notifications);
-
-    console.log(request.id);
     
-    
-    // changer la valeur de didIAccept a true
     const updatedNotifications = notifications.map((notification: any) => {
-      console.log(updatedNotifications);
       if (notification.id === request.id) {
         return {
           ...notification,
@@ -26,7 +20,7 @@ export default function FriendRequestCard(request: FriendRequest) {
     });
     
     localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
-
+    
     window.location.reload();
   }
 
@@ -41,7 +35,9 @@ export default function FriendRequestCard(request: FriendRequest) {
 
         <button
           className="justify-end border px-6 rounded-full mx-24 bg-green-100"
-          onClick={acceptFriendRequest}>Accept</button>
+          onClick={acceptFriendRequest}>
+          Accept
+        </button>
 
       </div>
     </div>
