@@ -7,6 +7,8 @@ export default function FriendRequestCard(request: FriendRequest) {
   async function acceptFriendRequest() {
     await acceptRequest(request.id.toString());
 
+    
+
     window.location.reload();
   }
 

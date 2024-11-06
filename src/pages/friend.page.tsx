@@ -10,9 +10,13 @@ export default function FriendPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    
+    const audio = new Audio('../assets/among-us-notif.mp3');
+    audio.play();
+
     loadInitialRequests();
     const handleNewFriendRequest = (data: FriendRequest) => {
-      setFriendRequests(prevRequests => {return [data, ...prevRequests];});
+      setFriendRequests(prevRequests => { return [data, ...prevRequests]; });
     };
 
     const eventSource = eventFetchFriendRequests(handleNewFriendRequest);

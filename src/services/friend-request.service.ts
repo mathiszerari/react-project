@@ -37,7 +37,7 @@ export const sendFriendRequest = async (receiverId: string) => {
 }
 
 export const acceptRequest = async (requestId: string) => {
-  const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/social/friend-request/${requestId}/accept`, {
+  await fetch(`${process.env.REACT_APP_API_BASE_URL}/social/friend-request/${requestId}/accept`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
