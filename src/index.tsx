@@ -9,8 +9,8 @@ import App from "./App";
 import "./index.css";
 import RegisterPage from "./pages/register.page";
 import LoginPage from "./pages/login.page";
-import ProtectedRoute from "./components/Guard/procteded-route.guard";
-import GuestRoute from "./components/Guard/guest-route.guard";
+import ProtectedRoute from "./components/Guards/procteded-route.guard";
+import GuestRoute from "./components/Guards/guest-route.guard";
 
 const router = createBrowserRouter([
   {
