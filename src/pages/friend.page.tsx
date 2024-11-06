@@ -11,10 +11,6 @@ export default function FriendPage() {
 
   useEffect(() => {
     loadFriendRequests();
-
-    friendRequests.forEach((d) => {
-      d.requestedAt = dateFormater(d.requestedAt);
-    })
   }, []);
 
   async function loadFriendRequests() {
