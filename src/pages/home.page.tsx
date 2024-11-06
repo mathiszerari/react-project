@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Friend } from "../types/friends";
 import { getUserFriends } from "../services/friends.service";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const [friends, setFriends] = useState<Friend[]>([]);
@@ -17,13 +18,27 @@ export default function HomePage() {
     fetchFriends();
   }, []);
 
+  const navigate = useNavigate();
+  const redirectUserToChatPage = (
+    event: React.MouseEvent<HTMLLIElement>,
+    userId: string
+  ) => {
+    event.preventDefault();
+    navigate(`/chats/${userId}`);
+  };
+
   return (
     <div>
       <h1>Home Page</h1>
       <div>
         <ul>
           {sortedByDateFriendsList.map((friend) => (
-            <li key={friend.userId}>{friend.username}</li>
+            <li
+              onClick={(e) => redirectUserToChatPage(e, friend.userId)}
+              key={friend.userId}
+            >
+              {friend.username}
+            </li>
           ))}
         </ul>
       </div>
