@@ -1,17 +1,18 @@
 import { create } from "zustand";
+import { User } from "../types/user";
 
 type State = {
   username: string;
-  userId: string;
+  id: string;
 };
 
 type Action = {
   clearUser: () => void;
-  updateUser: (newUser: State) => void;
+  updateUser: (newUser: User) => void;
 };
 export const useUserStore = create<State & Action>((set) => ({
   username: "",
-  userId: "",
-  clearUser: () => set({ username: "", userId: "" }),
-  updateUser: (newUser) => set(newUser),
+  id: "",
+  clearUser: () => set({ username: "", id: "" }),
+  updateUser: (newUser) => set({ username: newUser.username, id: newUser.id }),
 }));
