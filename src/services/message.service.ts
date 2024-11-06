@@ -1,8 +1,8 @@
 import Message from "../types/message";
-import { MessageDTO } from "../dtos/message.dto";
 
-export const sendMessage = async (message: MessageDTO): Promise<void> => {
-  await fetch(`${process.env.REACT_APP_API_BASE_URL}/chat/${message.id}/send`, {
+export const sendMessage = async (message: Message): Promise<void> => {
+  const messageId= crypto.randomUUID()
+  const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/chat/${messageId}/send`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -13,6 +13,10 @@ export const sendMessage = async (message: MessageDTO): Promise<void> => {
       content: message.content,
     }),
   })
+  //TODO: Gérer plusieurs erreurs dont erreur connexion
+  if (!response.ok) {
+    throw new Error(`Error ${response.status}: ${response.statusText}`);
+  }
 }
 
 export const fetchMessages = async (receiverId: string): Promise<Message[]> => {
@@ -26,7 +30,6 @@ export const fetchMessages = async (receiverId: string): Promise<Message[]> => {
   if (!response.ok) {
     throw new Error(`Error ${response.status}: ${response.statusText}`);
   }
-  //TODO : Attention pas d'erreur si utilisateur n'existe pas ou pas ami
   return await response.json()
 }
 

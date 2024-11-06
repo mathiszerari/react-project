@@ -8,6 +8,7 @@ type States = {
 type Actions = {
   setFriends: (friends: Friend[]) => void;
   addFriend: (friend: Friend) => void;
+  clearFriends: () => void;
 };
 
 export const useFriendStore = create<States & Actions>((set) => ({
@@ -15,4 +16,5 @@ export const useFriendStore = create<States & Actions>((set) => ({
   setFriends: (friends: Friend[]) => set({ friends }),
   addFriend: (friend: Friend) =>
     set((state) => ({ friends: [...state.friends, friend] })),
+  clearFriends: () => set({ friends: [] }),
 }));
