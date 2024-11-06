@@ -2,12 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+
+import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import "./index.css";
-import HomePage from "./pages/HomePage";
-import FriendPage from "./pages/FriendPage";
+import RegisterPage from "./pages/register.page";
+import LoginPage from "./pages/login.page";
+import HomePage from "./pages/home.page";
 import ChatListPage from "./pages/chat-list.page";
 import ChatPage from "./pages/chat.page";
+import FriendPage from "./pages/friend.page";
+import ProtectedRoute from "./components/guards/procteded-route.guard";
+import GuestRoute from "./components/guards/guest-route.guard";
 
 const router = createBrowserRouter([
   {
@@ -15,20 +21,38 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        index: true,
-        element: <HomePage />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            index: true,
+            element: <HomePage />,
+          },
+          {
+            path: "/chats",
+            element: <ChatListPage />,
+          },
+          {
+            path: "/chats/:receiverId",
+            element: <ChatPage />,
+          },
+          {
+            path: "/friends",
+            element: <FriendPage />,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    element: <GuestRoute />,
+    children: [
+      {
+        path: "/register",
+        element: <RegisterPage />,
       },
       {
-        path: "/chats",
-        element: <ChatListPage />,
-      },
-      {
-        path: "/chats/:receiverId",
-        element: <ChatPage />,
-      },
-      {
-        path: "/friends",
-        element: <FriendPage />,
+        path: "/login",
+        element: <LoginPage />,
       },
 
     ],
