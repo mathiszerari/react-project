@@ -1,4 +1,4 @@
-import { UserDTO } from "../types/user-dto";
+import { UserDTO } from "../dtos/user.dto";
 
 export async function loginUser(data: UserDTO) {
   const response = await fetch(
@@ -48,4 +48,15 @@ export async function logoutUser() {
     const { message } = await response.json();
     throw new Error(message);
   }
+}
+
+export async function checkUserAuth() {
+  const response = await fetch(
+    `${process.env.REACT_APP_API_BASE_URL}/auth/me`,
+    {
+      credentials: "include",
+    }
+  );
+
+  return response.ok ? true : false;
 }

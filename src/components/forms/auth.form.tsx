@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { UserDTO } from "../../types/user-dto";
+import { UserDTO } from "../../dtos/user.dto";
 
 interface AuthFormProps {
   submitFn: (data: UserDTO) => Promise<void>;

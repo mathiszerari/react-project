@@ -1,16 +1,17 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import { useUserStore } from "../../stores/userStore";
 import { useEffect } from "react";
+import { checkUserAuth } from "../../services/auth.service";
 
 export default function GuestRoute() {
-  const checkUserAuth = useUserStore((state) => state.checkUserAuth);
   const navigate = useNavigate();
+
   const checkAuth = async () => {
     const isAuth = await checkUserAuth();
     if (isAuth) {
       navigate("/");
     }
   };
+
   useEffect(() => {
     checkAuth();
   }, []);
