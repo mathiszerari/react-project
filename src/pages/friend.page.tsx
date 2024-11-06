@@ -3,6 +3,7 @@ import FriendRequestCard from "../components/friend-request-card.component";
 import { eventFetchFriendRequests, fetchFriendRequests } from "../services/friend-request.service";
 import Loader from "../components/loaders/loader.component";
 import { FriendRequest } from "../types/friend-request";
+import AddFriend from "../components/add-friend.component";
 
 export default function FriendPage() {
   const [friendRequests, setFriendRequests] = useState<FriendRequest[]>([]);
@@ -10,7 +11,6 @@ export default function FriendPage() {
 
   useEffect(() => {
     loadInitialRequests();
-
     const handleNewFriendRequest = (data: FriendRequest) => {
       setFriendRequests(prevRequests => {return [data, ...prevRequests];});
     };
@@ -37,15 +37,16 @@ export default function FriendPage() {
     <div>
       {loading ? <Loader /> : null}
 
-      <h1>Friend Page</h1>
-
       <div className="border m-6 p-4 bg-blue-100 rounded-3xl">
         <div className="border rounded-3xl p-4 bg-blue-50">
-          <span className="mx-16 my-6 text-2xl font-bold">Friends Requests</span>
+          <AddFriend />
+          <div>
+            <span className="mx-16 my-6 text-2xl font-bold">Friends Requests</span>
 
-          {friendRequests.map((request) => (
-            <FriendRequestCard key={request.id} {...request} />
-          ))}
+            {friendRequests.map((request) => (
+              <FriendRequestCard key={request.id} {...request} />
+            ))}
+          </div>
         </div>
       </div>
     </div>

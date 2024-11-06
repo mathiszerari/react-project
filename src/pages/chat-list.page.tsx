@@ -7,7 +7,6 @@ export default function ChatListPage() {
   const [chats, setChats] = useState<Chat[]>([]);
 
   useEffect(() => {
-    console.log(data);
     setChats(data);
     
   }, []);
