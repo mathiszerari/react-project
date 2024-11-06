@@ -23,3 +23,15 @@ export const eventFetchFriendRequests = (onRequestReceived: (data: FriendRequest
   };
   return eventSource;
 }
+
+export const sendFriendRequest = async (receiverId: string) => {
+  const randomuuid = crypto.randomUUID(); 
+  const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/social/friend-request/${randomuuid}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ receiverId: receiverId }),
+  })
+}
