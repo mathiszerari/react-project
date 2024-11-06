@@ -1,14 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+
 import reportWebVitals from "./reportWebVitals";
-import HomePage from "./pages/home.page";
-import ChatPage from "./pages/ChatPage";
-import FriendPage from "./pages/friend.page";
 import App from "./App";
 import "./index.css";
 import RegisterPage from "./pages/register.page";
 import LoginPage from "./pages/login.page";
+import HomePage from "./pages/home.page";
+import ChatListPage from "./pages/chat-list.page";
+import ChatPage from "./pages/chat.page";
+import FriendPage from "./pages/friend.page";
 import ProtectedRoute from "./components/guards/procteded-route.guard";
 import GuestRoute from "./components/guards/guest-route.guard";
 
@@ -26,6 +29,10 @@ const router = createBrowserRouter([
           },
           {
             path: "/chats",
+            element: <ChatListPage />,
+          },
+          {
+            path: "/chats/:receiverId",
             element: <ChatPage />,
           },
           {
@@ -47,6 +54,7 @@ const router = createBrowserRouter([
         path: "/login",
         element: <LoginPage />,
       },
+
     ],
   },
 ]);
