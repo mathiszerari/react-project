@@ -16,7 +16,7 @@ export default function ProtectedRoute() {
       navigate("/login");
     }
 
-    if (!id) {
+    if (!id && isAuth) {
       const currentUser = await getCurrentUser();
       updateUser(currentUser);
     }
