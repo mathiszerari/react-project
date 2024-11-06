@@ -1,4 +1,3 @@
-import { FriendRequestAcceptedDTO } from "../dtos/friend-request-accepted.dto";
 import { FriendRequest } from "../types/friend-request";
 
 export async function fetchFriendRequests() {
@@ -14,7 +13,7 @@ export async function fetchFriendRequests() {
 
 export const sendFriendRequest = async (receiverId: string) => {
   const randomuuid = crypto.randomUUID(); 
-  const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/social/friend-request/${randomuuid}`, {
+  await fetch(`${process.env.REACT_APP_API_BASE_URL}/social/friend-request/${randomuuid}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -25,7 +24,7 @@ export const sendFriendRequest = async (receiverId: string) => {
 }
 
 export const acceptRequest = async (requestId: string) => {
-  const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/social/friend-request/${requestId}/accept`, {
+  await fetch(`${process.env.REACT_APP_API_BASE_URL}/social/friend-request/${requestId}/accept`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -34,7 +33,7 @@ export const acceptRequest = async (requestId: string) => {
   })
 }
 
-export const eventFetchFriendRequests = (onRequestReceived: (data: FriendRequest) => void) => {
+export const eventFetchFriendRequests = (onRequestReceived: (data: any) => void) => {
   const eventSource = new EventSource(`${process.env.REACT_APP_API_BASE_URL}/notifications`, { withCredentials: true })
   eventSource.addEventListener('friend-request-received', (event) => {
     const data = JSON.parse(event.data);
@@ -46,13 +45,13 @@ export const eventFetchFriendRequests = (onRequestReceived: (data: FriendRequest
   return eventSource;
 }
 
-export const eventAcceptedFriendRequest = (onRequestAccepted: (data: FriendRequestAcceptedDTO) => void) => {
+export const eventAcceptedFriendRequest = (onRequestAccepted: (data: {userId: string}) => void) => {
   const eventSource = new EventSource(`${process.env.REACT_APP_API_BASE_URL}/notifications`, { withCredentials: true })
   eventSource.addEventListener('friend-request-accepted', (event) => {
     const data = JSON.parse(event.data);
+    console.log(data);
     onRequestAccepted(data);
   })
-
   eventSource.onerror = (error) => {
     eventSource.close();
   };

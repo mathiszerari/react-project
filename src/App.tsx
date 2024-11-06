@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navigation from "./components/navigation";
 import { useEffect } from "react";
 import Notification from "./types/notification";
-import { eventFetchFriendRequests } from "./services/friend-request.service";
+import { eventAcceptedFriendRequest, eventFetchFriendRequests } from "./services/friend-request.service";
 
 export default function App() {
 
@@ -20,9 +20,23 @@ export default function App() {
     //TODO stocker les données dans le localStorage
   }    
 
+  function saveAcceptedRequest(request: string) {
+    const notification: Notification = {
+      id: crypto.randomUUID(),
+      type: "friend-request-accepted",
+      emitterId: request,
+      content: request + ' accepted to be your friend',
+      receivedAt: new Date().toISOString(),
+    }
+
+    console.log(notification);
+
+    //TODO stocker les données dans le localStorage
+  }    
+
   useEffect(() => {
     const handleNewFriendRequest = (request: any) => {
-      saveReceivedRequest(request);
+      saveAcceptedRequest(request);
     }
 
     const eventSource = eventFetchFriendRequests(handleNewFriendRequest);
@@ -32,6 +46,21 @@ export default function App() {
     };
   }, [])
 
+  useEffect(() => {
+    console.log("notifications");
+    
+    const handleAcceptedFriendRequest = (request: any) => {
+      saveReceivedRequest(request);
+      console.log("success");
+    }
+
+    const eventSource = eventAcceptedFriendRequest(handleAcceptedFriendRequest);
+
+    return () => {
+      eventSource.close();
+    };
+  }, [])
+  
   return (
     <div>
       <Navigation />

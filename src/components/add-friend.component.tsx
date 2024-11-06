@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useUserStore } from "../stores/user.store";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { sendFriendRequest } from "../services/friend-request.service";
