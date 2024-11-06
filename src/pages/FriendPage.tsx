@@ -10,18 +10,18 @@ export default function FriendPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadFriendRequests() {
-      const requests = await fetchFriendRequests();
-      setFriendRequests(requests);
-      setLoading(false);
-    }
-
     loadFriendRequests();
 
     friendRequests.forEach((d) => {
       d.requestedAt = dateFormater(d.requestedAt);
     })
   }, []);
+
+  async function loadFriendRequests() {
+    const requests = await fetchFriendRequests();
+    setFriendRequests(requests);
+    setLoading(false);
+  }
 
   return (
     <div>
