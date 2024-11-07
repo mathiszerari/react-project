@@ -10,8 +10,8 @@ import { MessageAdapter } from "../adapters/message.adapter";
 import { BadRequestError } from "../errors/bad-request.error";
 import { useUserStore } from "../stores/user.store";
 
-const messageService : MessageAdapter = new FalseMessageService();
-// const messageService: MessageAdapter = new MessageService();
+// const messageService : MessageAdapter = new FalseMessageService();
+const messageService: MessageAdapter = new MessageService();
 
 export default function ChatPage() {
 
@@ -82,26 +82,39 @@ export default function ChatPage() {
   }, [receiverId]);
 
   return (
+    <div>
       <div>
-        <div>
-          {messages.map((message, index) => (
-            message.error ? (
-                <div key={index} style={{ color: "green" }}>
-                  {`${message.content} : ${dateFormater(message.sendAt)}`}
-                  <button onClick={() => retryMessage(message)}>Retry</button>
-                </div>
-              ) :
-              message.receiverId === receiverId ? (
-                <div key={index} style={{ color: "blue" }}>
-                  {`${message.content} : ${dateFormater(message.sendAt)}`}
-                </div>
-              ) : (
-                <div key={index} style={{ color: "red" }}>
-                  {`${message.content} : ${dateFormater(message.sendAt)}`}
-                </div>
-              )
-          ))}
-        </div>
+        {messages.map((message, index) => {
+          const splitMessage = message.content.split(" ");
+
+          const htmlMessage = splitMessage.map((word, i) => {
+            if (word.startsWith("http://") || word.startsWith("https://")) {
+              return (
+                <a key={i} href={word} target="_blank">
+                  {word}
+                </a>
+              );
+            } else {
+              return <span key={i}>{word} </span>;
+            }
+          });
+
+          return message.error ? (
+            <div key={index} style={{ color: "green" }}>
+              {htmlMessage} : {dateFormater(message.sendAt)}
+              <button onClick={() => retryMessage(message)}>Retry</button>
+            </div>
+          ) : message.receiverId === receiverId ? (
+            <div key={index} style={{ color: "blue" }}>
+              {htmlMessage} : {dateFormater(message.sendAt)}
+            </div>
+          ) : (
+            <div key={index} style={{ color: "red" }}>
+              {htmlMessage} : {dateFormater(message.sendAt)}
+            </div>
+          );
+        })}
+      </div>
 
 
         <form onSubmit={handleSubmit(onSubmit)}>
