@@ -3,7 +3,9 @@ import { MessageAdapter } from "../adapters/message.adapter";
 import { BadRequestError } from "../errors/bad-request.error";
 
 export class MessageService implements MessageAdapter {
-   sendMessage = async (message: Message): Promise<void> => {
+  sendMessage = async (message: Message): Promise<void> => {
+    console.log(`${process.env.REACT_APP_API_BASE_URL}/chat/${message.id}/send`)
+    console.log({receiverId: message.receiverId, content: message.content,})
     const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/chat/${message.id}/send`, {
       method: 'POST',
       headers: {
@@ -15,7 +17,8 @@ export class MessageService implements MessageAdapter {
         content: message.content,
       }),
     })
-    //TODO: Gérer plusieurs erreurs dont erreur connexion
+    console.log(response)
+
     if (response.status === 400) {
       throw new BadRequestError("You are not friend with this user");
     }
@@ -38,19 +41,6 @@ export class MessageService implements MessageAdapter {
       throw new Error(`Error ${response.status}: ${response.statusText}`);
     }
     return await response.json()
-  }
-
-  eventFetchMessages = (onMessageReceived: (data: Message) => void) => {
-    const eventSource = new EventSource(`${process.env.REACT_APP_API_BASE_URL}/notifications`, { withCredentials: true })
-    eventSource.addEventListener('message-received', (event) => {
-      const data = JSON.parse(event.data);
-      onMessageReceived(data);
-    })
-
-    eventSource.onerror = (error) => {
-      eventSource.close();
-    };
-    return eventSource;
   }
 }
 
@@ -99,18 +89,5 @@ export class FalseMessageService implements MessageAdapter {
       throw new Error(`Error ${response.status}: ${response.statusText}`);
     }
     return await response.json()
-  }
-
-  eventFetchMessages = (onMessageReceived: (data: Message) => void) => {
-    const eventSource = new EventSource(`${process.env.REACT_APP_API_BASE_URL}/notifications`, { withCredentials: true })
-    eventSource.addEventListener('message-received', (event) => {
-      const data = JSON.parse(event.data);
-      onMessageReceived(data);
-    })
-
-    eventSource.onerror = (error) => {
-      eventSource.close();
-    };
-    return eventSource;
   }
 }

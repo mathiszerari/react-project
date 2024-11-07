@@ -31,20 +31,22 @@ export default function HomePage() {
   };
 
   return (
-    <div>
-      <h1>Home Page</h1>
+    <>
       <div>
-        <ul>
-          {sortedByDateFriendsList.map((friend) => (
-            <li
-              onClick={(e) => redirectUserToChatPage(e, friend.userId)}
-              key={friend.userId}
-            >
-              {friend.username}
-            </li>
-          ))}
-        </ul>
+        <h1>Home Page</h1>
+        <div>
+          <ul>
+            {sortedByDateFriendsList.map((friend) => (
+              <li
+                onClick={(e) => redirectUserToChatPage(e, friend.userId)}
+                key={friend.userId}
+              >
+                {friend.username}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
