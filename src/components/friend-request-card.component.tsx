@@ -1,5 +1,6 @@
 import { acceptRequest } from "../services/friend-request.service";
 import { FriendRequest } from "../types/friend-request";
+import Notification from "../types/notification";
 import { dateFormater } from "../utils/dateFormater";
 
 export default function FriendRequestCard(request: FriendRequest) {
@@ -7,6 +8,20 @@ export default function FriendRequestCard(request: FriendRequest) {
   async function acceptFriendRequest() {
     await acceptRequest(request.id.toString());
 
+    const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
+    
+    const updatedNotifications = notifications.map((notification: Notification) => {
+      if (notification.id === request.id) {
+        return {
+          ...notification,
+          didIAccept: true
+        };
+      }
+      return notification;
+    });
+    
+    localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+    
     window.location.reload();
   }
 
@@ -21,7 +36,9 @@ export default function FriendRequestCard(request: FriendRequest) {
 
         <button
           className="justify-end border px-6 rounded-full mx-24 bg-green-100"
-          onClick={acceptFriendRequest}>Accept</button>
+          onClick={acceptFriendRequest}>
+          Accept
+        </button>
 
       </div>
     </div>

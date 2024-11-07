@@ -11,7 +11,8 @@ export default function FriendPage() {
 
   useEffect(() => {
     loadInitialRequests();
-    const handleNewFriendRequest = (data: FriendRequest) => {
+
+    const handleNewFriendRequest = (data: any) => {
       setFriendRequests(prevRequests => {return [data, ...prevRequests];});
     };
 
