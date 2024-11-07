@@ -1,19 +1,12 @@
 import { useEffect, useState } from "react";
 import data from "../mock/user-data.json";
+import Chat from "../types/chat";
 
-interface Chat {
-  id: number;
-  name: string;
-  username: string;
-  profilePicture: string;
-  createdAt: string;
-}
 
-export default function ChatPage() {
+export default function ChatListPage() {
   const [chats, setChats] = useState<Chat[]>([]);
 
   useEffect(() => {
-    console.log(data);
     setChats(data);
     
   }, []);
