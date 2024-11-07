@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Friend } from "../types/friend";
 import { getUserFriends } from "../services/friend.service";
 import Notification from "../types/notification";
+import { countUnseenNotifications } from "../utils/count-unseen-notifications";
+import { useFriendStore } from "../stores/friend.store";
 
 export default function NotificationListPage() {
   const [friends, setFriends] = useState<Friend[]>([]);
@@ -16,6 +18,12 @@ export default function NotificationListPage() {
       setFriends(fetchedFriends);
       
       const updatedNotifications = parsedNotifications.map((notification: Notification) => {
+        if (notification.isSeen == false) {
+          return {
+            ...notification,
+            isSeen: "true"
+          };
+        }
         if (notification.status === "my-friend-request-accepted") {
           const selectedFriend = fetchedFriends.find(
             (friend: Friend) => friend.userId === notification.emitterId
@@ -47,6 +55,7 @@ export default function NotificationListPage() {
 
       setNotifications(updatedNotifications);
       localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+      countUnseenNotifications();
     });
   }, []);
 
@@ -73,7 +82,7 @@ export default function NotificationListPage() {
               }
             >
               {notification.status === 'friend-accepted' && (
-                <span>{notification.emitterUsername} accepted to be your friend</span>
+                <span>{notification.emitterUsername}'s request approved by you</span>
               )}
               {notification.status === 'my-friend-request-accepted' && (
                 <span>{notification.emitterId} accepted your friend request</span>

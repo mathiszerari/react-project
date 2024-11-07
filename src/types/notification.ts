@@ -6,4 +6,5 @@ export default interface Notification {
   receivedAt: string;
   didIAccept?: boolean;
   status?: string;
+  isSeen: false;
 }
