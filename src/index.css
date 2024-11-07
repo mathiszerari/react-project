@@ -63,19 +63,25 @@
     @apply outline-2 outline-cyan-400 ring-[3px] ring-cyan-500;
   }
 }
-@layer {
-  body {
-    /* background-image: linear-gradient(
-      0deg,
-      #ededed 41.67%,
-      #ffffff 41.67%,
-      #ffffff 50%,
-      #ededed 50%,
-      #ededed 91.67%,
-      #ffffff 91.67%,
-      #ffffff 100%
-    );
-    background-size: 24px 24px; */
-    @apply bg-slate-100 text-slate-600;
-  }
+body {
+  /* background-image: linear-gradient(
+    0deg,
+    #ededed 41.67%,
+    #ffffff 41.67%,
+    #ffffff 50%,
+    #ededed 50%,
+    #ededed 91.67%,
+    #ffffff 91.67%,
+    #ffffff 100%
+  );
+  background-size: 24px 24px; */
+  @apply bg-slate-100 text-slate-600 flex w-full h-lvh border-2;
+}
+
+#root {
+  @apply h-full w-full flex flex-col items-center justify-center;
+}
+
+h1 {
+  @apply text-6xl font-bold;
 }

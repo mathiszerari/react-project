@@ -1,21 +1,23 @@
 interface ButtonProps {
   label: string;
   onClick?: (params?: any) => any;
-  type?: "submit";
+  type?: "submit" | "button";
   disabled?: boolean;
   variant?: "primary" | "secondary" | "tertiary";
+  className?: string;
 }
 
 export default function Button({
   label,
   onClick,
-  type,
+  type = "button",
   disabled,
   variant = "primary",
+  className,
 }: ButtonProps) {
   return (
     <button
-      className={`${variant}-btn`}
+      className={`${variant}-btn ${className}`}
       onClick={onClick}
       disabled={disabled}
       type={type}
