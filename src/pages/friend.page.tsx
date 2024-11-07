@@ -9,6 +9,13 @@ export default function FriendPage() {
   const [friendRequests, setFriendRequests] = useState<FriendRequest[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const removeFriendRequest = (friendRequest: FriendRequest) => {
+    setFriendRequests((prevRequests) =>
+      prevRequests.filter((request) => request.id !== friendRequest.id)
+    );
+  };
+  
+
   useEffect(() => {
     loadInitialRequests();
 
@@ -45,7 +52,9 @@ export default function FriendPage() {
             <span className="mx-16 my-6 text-2xl font-bold">Friends Requests</span>
 
             {friendRequests.map((request) => (
-              <FriendRequestCard key={request.id} {...request} />
+              <div key={request.id}>
+                <FriendRequestCard request={request} removeFriendRequest={removeFriendRequest} />
+              </div>
             ))}
           </div>
         </div>

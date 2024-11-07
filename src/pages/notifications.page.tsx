@@ -20,7 +20,7 @@ export default function NotificationListPage() {
 
       const updatedNotifications = notifications.map(
         (notification: Notification) => {
-          if (notification.isSeen == false) {
+          if (notification.isSeen === false) {
             return {
               ...notification,
               isSeen: true,
