@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { eventFetchFriendRequests } from "../../services/friend-request.service";
 import { countUnseenNotifications } from "../../utils/count-unseen-notifications";
 import Notification from "../../types/notification";
 import { useNotificationStore } from "../../stores/notification.store";
+import { NotificationService, EventName } from "../../services/notification.service";
 
-export default function FriendRequestReceived() {
+export default function FriendRequestReceived({ notificationService }: { notificationService: NotificationService }) {
   const { notifications, addNotification } = useNotificationStore();
 
   function saveReceivedRequest(request: any) {
@@ -27,13 +27,12 @@ export default function FriendRequestReceived() {
   }
 
   useEffect(() => {
+
     const handleNewFriendRequest = (request: any) => {
       console.log("get the request");
-
       saveReceivedRequest(request);
     };
-
-    const eventSource = eventFetchFriendRequests(handleNewFriendRequest);
+    const eventSource = notificationService.eventListener(handleNewFriendRequest, EventName.FRIEND_REQUEST_RECEIVED);
 
     return () => {
       eventSource.close();

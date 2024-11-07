@@ -33,26 +33,26 @@ export const acceptRequest = async (requestId: string) => {
   })
 }
 
-export const eventFetchFriendRequests = (onRequestReceived: (data: any) => void) => {
-  const eventSource = new EventSource(`${process.env.REACT_APP_API_BASE_URL}/notifications`, { withCredentials: true })
-  eventSource.addEventListener('friend-request-received', (event) => {
-    const data = JSON.parse(event.data);
-    onRequestReceived(data);
-  })
-  eventSource.onerror = (error) => {
-    eventSource.close();
-  };
-  return eventSource;
-}
-
-export const eventAcceptedFriendRequest = (onRequestAccepted: (data: any) => void) => {
-  const eventSource = new EventSource(`${process.env.REACT_APP_API_BASE_URL}/notifications`, { withCredentials: true })
-  eventSource.addEventListener('friend-request-accepted', (event) => {
-    const data = JSON.parse(event.data);
-    onRequestAccepted(data);
-  })
-  eventSource.onerror = (error) => {
-    eventSource.close();
-  };
-  return eventSource;
-}
+// export const eventFetchFriendRequests = (onRequestReceived: (data: any) => void) => {
+//   const eventSource = new EventSource(`${process.env.REACT_APP_API_BASE_URL}/notifications`, { withCredentials: true })
+//   eventSource.addEventListener('friend-request-received', (event) => {
+//     const data = JSON.parse(event.data);
+//     onRequestReceived(data);
+//   })
+//   eventSource.onerror = (error) => {
+//     eventSource.close();
+//   };
+//   return eventSource;
+// }
+//
+// export const eventAcceptedFriendRequest = (onRequestAccepted: (data: any) => void) => {
+//   const eventSource = new EventSource(`${process.env.REACT_APP_API_BASE_URL}/notifications`, { withCredentials: true })
+//   eventSource.addEventListener('friend-request-accepted', (event) => {
+//     const data = JSON.parse(event.data);
+//     onRequestAccepted(data);
+//   })
+//   eventSource.onerror = (error) => {
+//     eventSource.close();
+//   };
+//   return eventSource;
+// }

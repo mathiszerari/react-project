@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { eventAcceptedFriendRequest } from "../../services/friend-request.service";
 import { countUnseenNotifications } from "../../utils/count-unseen-notifications";
 import Notification from "../../types/notification";
 import { useNotificationStore } from "../../stores/notification.store";
+import { NotificationService, EventName } from "../../services/notification.service";
 
-export default function FriendRequestAccepted() {
+export default function FriendRequestAccepted({ notificationService }: { notificationService: NotificationService }) {
 
   const { notifications, addNotification } = useNotificationStore();
 
@@ -19,7 +19,6 @@ export default function FriendRequestAccepted() {
     }
     
     addNotification(notification);
-    console.log(notifications)
     countUnseenNotifications(notifications);
   }
 
@@ -29,8 +28,7 @@ export default function FriendRequestAccepted() {
     const handleAcceptedFriendRequest = (request: any) => {
       saveAcceptedRequest(request);
     }
-
-    const eventSource = eventAcceptedFriendRequest(handleAcceptedFriendRequest);
+    const eventSource = notificationService.eventListener(handleAcceptedFriendRequest, EventName.FRIEND_REQUEST_ACCEPTED);
 
     return () => {
       eventSource.close();
