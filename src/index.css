@@ -4,7 +4,7 @@
 
 @layer components {
   .btn {
-    @apply relative px-8 py-1 rounded-full overflow-hidden transition-all duration-300 outline-none font-semibold;
+    @apply relative md:px-8 md:py-1 px-2 rounded-full overflow-hidden transition-all duration-300 outline-none font-semibold;
   }
 
   .btn:hover,
@@ -95,7 +95,7 @@ body {
 }
 
 h1 {
-  @apply text-6xl font-bold;
+  @apply text-5xl font-bold sm:text-6xl;
 }
 
 main {

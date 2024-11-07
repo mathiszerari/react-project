@@ -23,19 +23,25 @@ export default function Navigation() {
   return (
     <div className="w-full sticky bottom-0 border-t-2 border-t-cyan-500 shadow-[inset_0px_24px_64px_rgba(0,0,0,0.3)] bg-slate-50">
       <div className="max-w-[1440px] w-full flex justify-between py-8 m-auto">
-        <div className="flex flex-row gap-16 items-end">
-          <IconButton onClick={() => navigate("/")}>
-            <div>Chats</div>
+        <div className="flex flex-row gap-4 sm:gap-16 items-end">
+          <IconButton className="md:w-32 w-16" onClick={() => navigate("/")}>
+            <div className="md:text-2xl text-lg">Chats</div>
           </IconButton>
-          <IconButton className="w-24" onClick={() => navigate("/friends")}>
+          <IconButton
+            className="md:w-24 w-16"
+            onClick={() => navigate("/friends")}
+          >
             <Users size={64} />
           </IconButton>
         </div>
-        <div className="flex flex-row gap-16 items-end">
-          <IconButton className="w-24" onClick={() => handleNotifications()}>
+        <div className="flex flex-row gap-4 sm:gap-16 items-end">
+          <IconButton
+            className="md:w-24 w-16"
+            onClick={() => handleNotifications()}
+          >
             <Mail size={64} />
           </IconButton>
-          <IconButton onClick={() => handleLogout()}>
+          <IconButton className="md:w-32 w-16" onClick={() => handleLogout()}>
             <DoorOpen size={64} />
           </IconButton>
         </div>
