@@ -127,7 +127,7 @@ export default function ChatPage() {
           className="flex flex-col sticky bottom-0"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="flex flex-row gap-8">
+          <div className="flex flex-row md:gap-8 gap-2">
             <label className="input-group grow">
               <input
                 onInput={(e) =>

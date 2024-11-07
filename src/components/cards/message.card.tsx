@@ -12,7 +12,7 @@ export default function MessageCard({
 }: MessageCardProps) {
   return (
     <div
-      className={`flex flex-col gap-2 items-start space-y-1 max-w-[50%] break-words ${
+      className={`flex flex-col gap-2 items-start space-y-1  md:max-w-[50%] max-w-[100%] break-words ${
         isSender ? "self-end" : "self-start"
       }`}
     >
