@@ -1,8 +1,28 @@
-.friend-card {
-  @apply flex justify-center items-center font-bold text-2xl uppercase;
-  @apply cursor-pointer border-4 border-zinc-400 aspect-video rounded-[5%/40%] bg-slate-50 shadow-[inset_0px_-64px_32px_rgba(0,0,0,0.2)] hover:scale-105 transition-all duration-300;
+@layer {
+  .friend-card {
+    @apply flex justify-center items-center font-bold text-2xl uppercase;
+    @apply cursor-pointer border-4 border-zinc-400 aspect-video rounded-[5%/40%] bg-slate-50 shadow-[inset_0px_-64px_32px_rgba(0,0,0,0.2)] hover:scale-105 transition-all duration-300;
+    @apply bg-[length:7px_7px];
+  }
 }
 
-.friend-card:hover {
-  @apply ring ring-cyan-500 border-cyan-300;
+.friend-card-red {
+  @apply friend-card;
+  @apply text-red-400;
+  @apply border-4 border-red-300 bg-red-50 shadow-[inset_0px_-64px_32px_rgba(255,0,0,0.2)];
+  @apply bg-gradient-to-b from-red-100 via-red-200 to-red-200;
+}
+
+.friend-card-blue {
+  @apply friend-card;
+  @apply text-blue-500;
+  @apply border-4 border-blue-300 bg-blue-50 shadow-[inset_0px_-64px_32px_rgba(0,0,255,0.2)];
+  @apply bg-gradient-to-b from-blue-200 via-blue-200 to-blue-200;
+}
+
+.friend-card-green {
+  @apply friend-card;
+  @apply text-green-500;
+  @apply border-4 border-green-300 bg-green-50 shadow-[inset_0px_-64px_32px_rgba(0,255,0,0.2)];
+  @apply bg-gradient-to-b from-green-200 via-green-200 to-green-200;
 }
