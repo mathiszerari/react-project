@@ -33,8 +33,8 @@ export default function HomePage() {
   };
 
   return (
-    <main className="flex flex-col justify-center">
-      <ul className="grid grid-rows-3 grid-cols-5 gap-6">
+    <main className="flex flex-col justify-center overflow-auto py-8">
+      <ul className="w-full h-full grid grid-rows-auto grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {sortedByDateFriendsList.map((friend) => (
           <li
             onClick={(e) => redirectUserToChatPage(e, friend.userId)}
@@ -43,8 +43,8 @@ export default function HomePage() {
             <FriendCard friend={friend} />
           </li>
         ))}
-        {friends.length < 15 &&
-          Array.from({ length: 15 - friends.length }).map((_, index) => (
+        {friends.length < 20 &&
+          Array.from({ length: 20 - friends.length }).map((_, index) => (
             <FriendCardPlaceholder key={index} />
           ))}
       </ul>

@@ -23,7 +23,11 @@ export default function MessageCard({
       >
         <p>{message.content}</p>
       </div>
-      <p className="text-sm text-slate-400 self-end">
+      <p
+        className={`text-sm text-slate-400 ${
+          isSender ? "self-end" : "self-start"
+        }`}
+      >
         {dateFormater(message.sendAt)}
       </p>
     </div>
