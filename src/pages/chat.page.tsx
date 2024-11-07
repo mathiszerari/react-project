@@ -1,12 +1,17 @@
-import {useNavigate, useParams} from "react-router-dom";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect } from "react";
 
 import { useMessageStore } from "../stores/message.store";
 import Message from "../types/message";
-import { sendMessage, fetchMessages, eventFetchMessages } from "../services/message.service";
-import MessagesLoader from "../components/loaders/messages.loader";
+import { FalseMessageService, MessageService } from "../services/message.service";
 import { dateFormater } from "../utils/dateFormater";
+import { MessageAdapter } from "../adapters/message.adapter";
+import { BadRequestError } from "../errors/bad-request.error";
+import { useUserStore } from "../stores/user.store";
+
+// const messageService : MessageAdapter = new FalseMessageService();
+const messageService: MessageAdapter = new MessageService();
 
 export default function ChatPage() {
 
@@ -14,11 +19,14 @@ export default function ChatPage() {
     content: string;
   }
 
+  const initialMessages = useLoaderData() as Message[];
+
   const navigate = useNavigate();
 
   const { receiverId } = useParams();
 
-  const { messages, setMessages, addMessage, updateLastMessage } = useMessageStore();
+  const { messages, setMessages, addMessage, updateErrorLastMessage } = useMessageStore();
+  const { id } = useUserStore();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: {
@@ -26,40 +34,47 @@ export default function ChatPage() {
     }
   })
 
-  const onSubmit: SubmitHandler<FormInputs> = async (input) => {
-    if (!receiverId) return;
-    const message: Message = {id: "", content: input.content, receiverId: receiverId, emitterId: "", sendAt: (new Date()).toISOString()};
-    addMessage(message);
-
+  const sendMessage = async (message: Message) => {
     try {
-      await sendMessage(message);
+      await messageService.sendMessage(message);
+    } catch (error) {
+      if (error instanceof BadRequestError) {
+        navigate('/');
+      }
+      else {
+        updateErrorLastMessage(true);
+      }
     }
-    catch (error) {
-      navigate('/');
-    }
+  }
 
-    const messages = await fetchMessages(receiverId);
-    setMessages(messages);
+  const onSubmit: SubmitHandler<FormInputs> = async (input) => {
+    const messageId = crypto.randomUUID()
+    if (!receiverId) return;
+    const message: Message = {
+      id: messageId,
+      content: input.content,
+      receiverId: receiverId,
+      emitterId: id,
+      sendAt: (new Date()).toISOString()
+    };
+    addMessage(message);
+    await sendMessage(message);
     reset();
   }
 
+  const retryMessage = async (message: Message) => {
+    updateErrorLastMessage(false);
+    await sendMessage(message);
+  }
+
   useEffect(() => {
-    if (!receiverId) return;
-    const loadMessages = async (): Promise<void> => {
-      try {
-        const messages = await fetchMessages(receiverId);
-        setMessages(messages);
-      } catch (error) {
-        navigate('/chats');
-      }
-    };
-    loadMessages();
+    setMessages(initialMessages);
 
     const handleNewMessage = (message: Message) => {
       addMessage(message);
     };
 
-    const eventSource = eventFetchMessages(handleNewMessage);
+    const eventSource = messageService.eventFetchMessages(handleNewMessage);
 
     return () => {
       eventSource.close();
@@ -67,22 +82,39 @@ export default function ChatPage() {
   }, [receiverId]);
 
   return (
-    <MessagesLoader receiverId={receiverId}>
-
+    <div>
       <div>
-        <div>
-          {messages.map((message, index) => (
-            message.receiverId === receiverId ? (
-              <div key={index} style={{ color: "blue" }}>
-                {`${message.content} : ${dateFormater(message.sendAt)}`}
-              </div>
-            ) : (
-              <div key={index} style={{ color: "red" }}>
-                {`${message.content} : ${dateFormater(message.sendAt)}`}
-              </div>
-            )
-          ))}
-        </div>
+        {messages.map((message, index) => {
+          const splitMessage = message.content.split(" ");
+
+          const htmlMessage = splitMessage.map((word, i) => {
+            if (word.startsWith("http://") || word.startsWith("https://")) {
+              return (
+                <a key={i} href={word} target="_blank">
+                  {word}
+                </a>
+              );
+            } else {
+              return <span key={i}>{word} </span>;
+            }
+          });
+
+          return message.error ? (
+            <div key={index} style={{ color: "green" }}>
+              {htmlMessage} : {dateFormater(message.sendAt)}
+              <button onClick={() => retryMessage(message)}>Retry</button>
+            </div>
+          ) : message.receiverId === receiverId ? (
+            <div key={index} style={{ color: "blue" }}>
+              {htmlMessage} : {dateFormater(message.sendAt)}
+            </div>
+          ) : (
+            <div key={index} style={{ color: "red" }}>
+              {htmlMessage} : {dateFormater(message.sendAt)}
+            </div>
+          );
+        })}
+      </div>
 
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -92,6 +124,5 @@ export default function ChatPage() {
         </form>
 
       </div>
-    </MessagesLoader>
   );
 }
