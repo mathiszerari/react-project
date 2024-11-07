@@ -3,7 +3,6 @@ import { Friend } from "../types/friend";
 import { getUserFriends } from "../services/friend.service";
 import Notification from "../types/notification";
 import { countUnseenNotifications } from "../utils/count-unseen-notifications";
-import { useFriendStore } from "../stores/friend.store";
 import { useNotificationStore } from "../stores/notification.store";
 
 export default function NotificationListPage() {
@@ -12,9 +11,6 @@ export default function NotificationListPage() {
   const [friends, setFriends] = useState<Friend[]>([]);
 
   useEffect(() => {
-    //TODO récupérer les friends du user sans call l'api comme valdo en cache
-
-
     getUserFriends().then((fetchedFriends) => {
       setFriends(fetchedFriends);
 
