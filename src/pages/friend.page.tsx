@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FriendRequestCard from "../components/friend-request-card.component";
 import { eventFetchFriendRequests, fetchFriendRequests } from "../services/friend-request.service";
-import Loader from "../components/loaders/loader.component";
+import Loader from "../components/loaders/spinner/loader.component";
 import { FriendRequest } from "../types/friend-request";
 import AddFriend from "../components/add-friend.component";
 

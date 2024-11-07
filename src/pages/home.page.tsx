@@ -1,7 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUserFriends } from "../services/friend.service";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { useFriendStore } from "../stores/friend.store";
+import Notifications from "../components/notifications/notifications.component";
+import { useNotificationStore } from "../stores/notification.store";
+import Notification from "../types/notification";
 
 export default function HomePage() {
   const { friends, setFriends } = useFriendStore();
@@ -31,20 +34,23 @@ export default function HomePage() {
   };
 
   return (
-    <div>
-      <h1>Home Page</h1>
+    <>
       <div>
-        <ul>
-          {sortedByDateFriendsList.map((friend) => (
-            <li
-              onClick={(e) => redirectUserToChatPage(e, friend.userId)}
-              key={friend.userId}
-            >
-              {friend.username}
-            </li>
-          ))}
-        </ul>
+        <h1>Home Page</h1>
+        <div>
+          <ul>
+            {sortedByDateFriendsList.map((friend) => (
+              <li
+                onClick={(e) => redirectUserToChatPage(e, friend.userId)}
+                key={friend.userId}
+              >
+                {friend.username}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+      <Notifications />
+    </>
   );
 }

@@ -4,58 +4,64 @@ import { getUserFriends } from "../services/friend.service";
 import Notification from "../types/notification";
 import { countUnseenNotifications } from "../utils/count-unseen-notifications";
 import { useFriendStore } from "../stores/friend.store";
+import { useNotificationStore } from "../stores/notification.store";
 
 export default function NotificationListPage() {
+  const { notifications, setNotifications } = useNotificationStore();
+
   const [friends, setFriends] = useState<Friend[]>([]);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(() => {
-    const storedNotifications = localStorage.getItem('notifications');
-    const parsedNotifications = storedNotifications ? JSON.parse(storedNotifications) : [];
-    setNotifications(parsedNotifications);
+    //TODO récupérer les friends du user sans call l'api comme valdo en cache
 
-    getUserFriends().then(fetchedFriends => {
+
+    getUserFriends().then((fetchedFriends) => {
       setFriends(fetchedFriends);
-      
-      const updatedNotifications = parsedNotifications.map((notification: Notification) => {
-        if (notification.isSeen == false) {
-          return {
-            ...notification,
-            isSeen: "true"
-          };
-        }
-        if (notification.status === "my-friend-request-accepted") {
-          const selectedFriend = fetchedFriends.find(
-            (friend: Friend) => friend.userId === notification.emitterId
-          );
-          
-          if (selectedFriend) {
+
+      const updatedNotifications = notifications.map(
+        (notification: Notification) => {
+          if (notification.isSeen == false) {
             return {
               ...notification,
-              status: "friend-accepted",
-              emitterUsername: selectedFriend.username
+              isSeen: true,
             };
           }
-        }
-        if (notification.didIAccept) {
-          const selectedFriend = fetchedFriends.find(
-            (friend: Friend) => friend.userId === notification.emitterId
-          );
-          
-          if (selectedFriend) {
-            return {
-              ...notification,
-              status: "friend-accepted",
-              emitterUsername: selectedFriend.username
-            };
+          if (notification.status === "my-friend-request-accepted") {
+            const selectedFriend = fetchedFriends.find(
+              (friend: Friend) => friend.userId === notification.emitterId
+            );
+
+            if (selectedFriend) {
+              return {
+                ...notification,
+                status: "friend-accepted",
+                emitterUsername: selectedFriend.username,
+              };
+            }
           }
+          if (notification.didIAccept) {
+            const selectedFriend = fetchedFriends.find(
+              (friend: Friend) => friend.userId === notification.emitterId
+            );
+
+            if (selectedFriend) {
+              return {
+                ...notification,
+                status: "friend-accepted",
+                emitterUsername: selectedFriend.username,
+              };
+            }
+          }
+          return notification;
         }
-        return notification;
-      });
+      );
 
       setNotifications(updatedNotifications);
-      localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
-      countUnseenNotifications();
+      localStorage.setItem(
+        "notifications",
+        JSON.stringify(updatedNotifications)
+      );
+      countUnseenNotifications(notifications);
     });
   }, []);
 
@@ -81,13 +87,17 @@ export default function NotificationListPage() {
                   : "bg-blue-100 border-blue-200 p-4 rounded-lg border"
               }
             >
-              {notification.status === 'friend-accepted' && (
-                <span>{notification.emitterUsername}'s request approved by you</span>
+              {notification.status === "friend-accepted" && (
+                <span>
+                  {notification.emitterUsername}'s request approved by you
+                </span>
               )}
-              {notification.status === 'my-friend-request-accepted' && (
-                <span>{notification.emitterId} accepted your friend request</span>
+              {notification.status === "my-friend-request-accepted" && (
+                <span>
+                  {notification.emitterId} accepted your friend request
+                </span>
               )}
-              {notification.status === 'pending-request' && (
+              {notification.status === "pending-request" && (
                 <span>{notification.emitterId} sent you a friend request</span>
               )}
             </div>
