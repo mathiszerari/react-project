@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import FriendRequestCard from "../components/friend-request-card.component";
-import { eventFetchFriendRequests, fetchFriendRequests } from "../services/friend-request.service";
+import { fetchFriendRequests } from "../services/friend-request.service";
 import Loader from "../components/loaders/spinner/loader.component";
 import { FriendRequest } from "../types/friend-request";
 import AddFriend from "../components/add-friend.component";
@@ -22,12 +22,12 @@ export default function FriendPage() {
     const handleNewFriendRequest = (data: any) => {
       setFriendRequests(prevRequests => {return [data, ...prevRequests];});
     };
-
-    const eventSource = eventFetchFriendRequests(handleNewFriendRequest);
-
-    return () => {
-      eventSource.close();
-    };
+    //
+    // const eventSource = eventFetchFriendRequests(handleNewFriendRequest);
+    //
+    // return () => {
+    //   eventSource.close();
+    // };
   }, []); 
   
   async function loadInitialRequests() {

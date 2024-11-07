@@ -8,7 +8,7 @@ import Notifications from "./components/notifications/notifications.component";
 import { useNotificationStore } from "./stores/notification.store";
 
 export default function App() {
- 
+
   return (
     <div>
       <Navigation />
