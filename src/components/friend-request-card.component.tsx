@@ -1,5 +1,6 @@
 import { acceptRequest } from "../services/friend-request.service";
 import { FriendRequest } from "../types/friend-request";
+import Notification from "../types/notification";
 import { dateFormater } from "../utils/dateFormater";
 
 export default function FriendRequestCard(request: FriendRequest) {
@@ -9,7 +10,7 @@ export default function FriendRequestCard(request: FriendRequest) {
 
     const notifications = JSON.parse(localStorage.getItem('notifications') || '[]');
     
-    const updatedNotifications = notifications.map((notification: any) => {
+    const updatedNotifications = notifications.map((notification: Notification) => {
       if (notification.id === request.id) {
         return {
           ...notification,
