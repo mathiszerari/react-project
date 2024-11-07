@@ -10,8 +10,8 @@ import { MessageAdapter } from "../adapters/message.adapter";
 import { BadRequestError } from "../errors/bad-request.error";
 import { useUserStore } from "../stores/user.store";
 
-// const messageService : MessageAdapter = new FalseMessageService();
-const messageService: MessageAdapter = new MessageService();
+const messageService : MessageAdapter = new FalseMessageService();
+// const messageService: MessageAdapter = new MessageService();
 
 export default function ChatPage() {
 
@@ -25,7 +25,7 @@ export default function ChatPage() {
 
   const { receiverId } = useParams();
 
-  const { messages, setMessages, addMessage, setErrorLastMessage } = useMessageStore();
+  const { messages, setMessages, addMessage, updateErrorLastMessage } = useMessageStore();
   const { id } = useUserStore();
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
@@ -42,7 +42,7 @@ export default function ChatPage() {
         navigate('/');
       }
       else {
-        setErrorLastMessage();
+        updateErrorLastMessage(true);
       }
     }
   }
@@ -63,7 +63,8 @@ export default function ChatPage() {
   }
 
   const retryMessage = async (message: Message) => {
-    console.log(message);
+    updateErrorLastMessage(false);
+    await sendMessage(message);
   }
 
   useEffect(() => {

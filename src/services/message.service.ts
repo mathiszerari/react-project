@@ -56,8 +56,35 @@ export class MessageService implements MessageAdapter {
 
 
 export class FalseMessageService implements MessageAdapter {
-  sendMessage(message: Message): Promise<void> {
-    throw new Error("Method not implemented.");
+  async sendMessage(message: Message): Promise<void> {
+
+    const random = Math.random() * 10;
+
+    if(random < 5) {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/chat/${message.id}/send`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          receiverId: message.receiverId,
+          content: message.content,
+        }),
+      })
+      //TODO: Gérer plusieurs erreurs dont erreur connexion
+      if (response.status === 400) {
+        throw new BadRequestError("You are not friend with this user");
+      }
+      else {
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+      }
+    }
+   else {
+      throw new Error("Method not implemented.");
+    }
   }
 
   fetchMessages = async (receiverId: string): Promise<Message[]> => {
