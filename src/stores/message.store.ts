@@ -6,17 +6,17 @@ type MessageStore = {
   messages: Message[];
   setMessages: (messages: Message[]) => void;
   addMessage: (message: Message) => void;
-  updateLastMessage: (newMessage: Message) => void;
+  updateErrorLastMessage: (error: boolean) => void;
 }
 
 export const useMessageStore = create<MessageStore>((set) => ({
   messages: [],
   setMessages: (messages: Message[]) => set({ messages }),
   addMessage: (message: Message) => set((state) => ({ messages: [...state.messages, message] })),
-  updateLastMessage: (newMessage: Message) =>
+  updateErrorLastMessage: (error: boolean) =>
     set((state) => {
       const messages = [...state.messages];
-      messages[messages.length - 1] = newMessage;
+      messages[messages.length - 1] = {...messages[messages.length - 1], error};
       return { messages };
     }),
 }))
