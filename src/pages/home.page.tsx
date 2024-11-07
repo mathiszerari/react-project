@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getUserFriends } from "../services/friend.service";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFriendStore } from "../stores/friend.store";
-import Notifications from "../components/notifications/notifications.component";
-import { useNotificationStore } from "../stores/notification.store";
-import Notification from "../types/notification";
 
 export default function HomePage() {
   const { friends, setFriends } = useFriendStore();
@@ -50,7 +47,6 @@ export default function HomePage() {
           </ul>
         </div>
       </div>
-      <Notifications />
     </>
   );
 }

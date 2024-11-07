@@ -9,6 +9,7 @@ import { dateFormater } from "../utils/dateFormater";
 import { MessageAdapter } from "../adapters/message.adapter";
 import { BadRequestError } from "../errors/bad-request.error";
 import { useUserStore } from "../stores/user.store";
+import Notifications from "../components/notifications/notifications.component";
 
 // const messageService : MessageAdapter = new FalseMessageService();
 const messageService: MessageAdapter = new MessageService();
@@ -122,6 +123,8 @@ export default function ChatPage() {
                  placeholder="Tapez votre message ici" {...register('content', { required: true })} />
           <input type="submit"/>
         </form>
+
+      <Notifications />
 
       </div>
   );

@@ -12,6 +12,7 @@ export default function App() {
   return (
     <div>
       <Navigation />
+      <Notifications />
       <Outlet />
     </div>
   );

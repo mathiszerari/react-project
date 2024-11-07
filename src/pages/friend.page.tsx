@@ -50,6 +50,8 @@ export default function FriendPage() {
           </div>
         </div>
       </div>
+
+
     </div>
   );
 }
