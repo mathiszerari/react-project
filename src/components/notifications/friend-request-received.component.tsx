@@ -29,7 +29,6 @@ export default function FriendRequestReceived({ notificationService }: { notific
   useEffect(() => {
 
     const handleNewFriendRequest = (request: any) => {
-      console.log("get the request");
       saveReceivedRequest(request);
     };
     const eventSource = notificationService.eventListener(handleNewFriendRequest, EventName.FRIEND_REQUEST_RECEIVED);

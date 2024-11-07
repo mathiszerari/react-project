@@ -38,6 +38,7 @@ export async function registerUser(data: UserDTO) {
 }
 
 export async function logoutUser() {
+
   const response = await fetch(
     `${process.env.REACT_APP_API_BASE_URL}/auth/logout`,
     {
@@ -49,6 +50,7 @@ export async function logoutUser() {
     const { message } = await response.json();
     throw new Error(message);
   }
+  localStorage.clear();
 }
 
 export async function getCurrentUser(): Promise<User> {
