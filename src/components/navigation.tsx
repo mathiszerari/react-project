@@ -21,22 +21,24 @@ export default function Navigation() {
 
   const handleNotifications = () => {};
   return (
-    <div className="w-full flex border-t-2 border-t-cyan-500 px-60 py-8 shadow-[inset_0px_24px_64px_rgba(0,0,0,0.3)] justify-between">
-      <div className="flex flex-row gap-16 items-end">
-        <IconButton onClick={() => navigate("/")}>
-          <div>Chats</div>
-        </IconButton>
-        <IconButton className="w-24" onClick={() => navigate("/friends")}>
-          <Users size={64} />
-        </IconButton>
-      </div>
-      <div className="flex flex-row gap-16 items-end">
-        <IconButton className="w-24" onClick={() => handleNotifications()}>
-          <Mail size={64} />
-        </IconButton>
-        <IconButton onClick={() => handleLogout()}>
-          <DoorOpen size={64} />
-        </IconButton>
+    <div className="w-full sticky bottom-0 border-t-2 border-t-cyan-500 shadow-[inset_0px_24px_64px_rgba(0,0,0,0.3)] bg-slate-50">
+      <div className="max-w-[1440px] w-full flex justify-between py-8 m-auto">
+        <div className="flex flex-row gap-16 items-end">
+          <IconButton onClick={() => navigate("/")}>
+            <div>Chats</div>
+          </IconButton>
+          <IconButton className="w-24" onClick={() => navigate("/friends")}>
+            <Users size={64} />
+          </IconButton>
+        </div>
+        <div className="flex flex-row gap-16 items-end">
+          <IconButton className="w-24" onClick={() => handleNotifications()}>
+            <Mail size={64} />
+          </IconButton>
+          <IconButton onClick={() => handleLogout()}>
+            <DoorOpen size={64} />
+          </IconButton>
+        </div>
       </div>
     </div>
   );
