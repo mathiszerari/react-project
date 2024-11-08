@@ -46,7 +46,7 @@ export default function Navigation() {
         <div className="flex flex-row gap-4 sm:gap-16 items-end">
           <IconButton
             className="md:w-24 w-16"
-            onClick={() => console.log("TO DO : DELETE ME")}
+            onClick={() => navigate("/notifications")}
           >
             <Mail
               className={` ${notifications.length > 0 ? "text-cyan-400" : ""}`}
