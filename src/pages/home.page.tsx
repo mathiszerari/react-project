@@ -29,8 +29,7 @@ export default function HomePage() {
     event: React.MouseEvent<HTMLLIElement>,
     userId: string
   ) => {
-    console.log("Enter event");
-
+    event.preventDefault();
     navigate(`/chats/${userId}`);
   };
 
