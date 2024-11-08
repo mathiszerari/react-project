@@ -16,6 +16,7 @@ import GuestRoute from "./components/guards/guest-route.guard";
 import { MessagesLoader } from "./components/loaders/messages.loader";
 import NotificationListPage from "./pages/notifications.page";
 import { NotificationsLoader } from "./components/loaders/notifications.loader";
+import InviteLinkPage from "./pages/invite-link.page";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
           {
             path: "/friends",
             element: <FriendPage />,
+          },
+          {
+            path: "/invite-link/:senderId",
+            element: <InviteLinkPage />,
           },
           {
             path: "/notifications",
