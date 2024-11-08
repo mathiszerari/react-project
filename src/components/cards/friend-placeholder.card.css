@@ -3,3 +3,7 @@
   @apply bg-gradient-to-b from-zinc-300 via-zinc-300 to-zinc-300;
   @apply bg-[length:7px_7px];
 }
+
+.friend-card-placeholder:hover {
+  cursor: url("../../assets/images/block-cursor.png"), not-allowed;
+}

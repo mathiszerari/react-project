@@ -5,6 +5,7 @@
 @layer components {
   .btn {
     @apply relative md:px-8 md:py-1 px-2 rounded-full overflow-hidden transition-all duration-300 outline-none font-semibold;
+    cursor: url("./assets/images/pointer-cursor.png"), auto;
   }
 
   .btn:hover,
@@ -88,6 +89,13 @@ body {
   );
   background-size: 24px 24px; */
   @apply bg-slate-100 text-slate-600 flex w-full h-lvh border-2;
+  cursor: url("./assets/images/normal-cursor.png"), auto;
+}
+
+input:hover,
+input:focus,
+input:active {
+  cursor: url("./assets/images/text-cursor.png"), text;
 }
 
 #root {
