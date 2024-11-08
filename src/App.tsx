@@ -10,10 +10,10 @@ import { useNotificationStore } from "./stores/notification.store";
 export default function App() {
 
   return (
-    <div className="border w-full h-full flex flex-col justify-between">
+    <div>
+      <Navigation />
       <Notifications />
       <Outlet />
-      <Navigation />
     </div>
   );
 }

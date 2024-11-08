@@ -1,17 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import * as React from "react";
+import { Link } from "react-router-dom";
 import { logoutUser } from "../services/auth.service";
 import { useFriendStore } from "../stores/friend.store";
 import { useUserStore } from "../stores/user.store";
-
-import IconButton from "./buttons/icon.button";
-import { DoorOpen } from "lucide-react";
-import { Users } from "lucide-react";
-import { Mail } from "lucide-react";
-
 import { countUnseenNotifications } from "../utils/count-unseen-notifications";
 import { useEffect } from "react";
 import { useNotificationStore } from "../stores/notification.store";
-
 
 export default function Navigation() {
   const { clearUser } = useUserStore();
@@ -22,49 +16,24 @@ export default function Navigation() {
     clearUser();
     clearFriends();
     logoutUser();
-    navigate("/login");
   };
 
-  const navigate = useNavigate();
-
-  const handleNotifications = () => {};
-    
   useEffect(() => {
     countUnseenNotifications(notifications);
   }, [notifications]);
+
   return (
-    <div className="w-full sticky bottom-0 border-t-2 border-t-cyan-500 shadow-[inset_0px_24px_64px_rgba(0,0,0,0.3)] bg-slate-50">
-      <div className="max-w-[1440px] w-full flex justify-between items-center py-8 m-auto">
-        <div className="flex flex-row gap-4 sm:gap-16 items-end">
-          <IconButton className="md:w-32 w-16" onClick={() => navigate("/")}>
-            <div className="md:text-2xl text-lg">Chats</div>
-          </IconButton>
-          <IconButton
-            className="md:w-24 w-16"
-            onClick={() => navigate("/friends")}
-          >
-            <Users size={64} />
-          </IconButton>
-        </div>
-        <h1 className="hidden lg:block">
-          Wii <span className="text-cyan-500 italic">Chat!</span>
-        </h1>
-        <div className="flex flex-row gap-4 sm:gap-16 items-end">
-          <IconButton
-            className="md:w-24 w-16"
-            onClick={() => handleNotifications()}
-          >
-            <Mail size={64} />
-          </IconButton>
-          <div className="flex">
+    <div className="mt-6 mx-64 border h-16 flex flex-row justify-around items-center rounded-full">
+      <Link to="/">Chats</Link>
+      <Link to="/friends">Friends</Link>
+      <div className="flex">
         <Link to="/notifications">Notifications </Link>
 
         <span> {countUnseenNotifications(notifications)}</span>
       </div>
-          <IconButton className="md:w-32 w-16" onClick={() => handleLogout()}>
-            <DoorOpen size={64} />
-          </IconButton>
-        </div>
-      </div>
+      <Link to="/login" onClick={handleLogout}>
+        Logout
+      </Link>
+    </div>
   );
 }

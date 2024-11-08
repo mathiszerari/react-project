@@ -9,7 +9,7 @@ type Actions = {
   setFriends: (friends: Friend[]) => void;
   addFriend: (friend: Friend) => void;
   clearFriends: () => void;
-  getFriendById: (userId: string) => Friend | undefined;
+  // fetchFriends: () => Friend[];
 };
 
 export const useFriendStore = create<States & Actions>((set, get) => ({
@@ -18,8 +18,5 @@ export const useFriendStore = create<States & Actions>((set, get) => ({
   addFriend: (friend: Friend) =>
     set((state) => ({ friends: [...state.friends, friend] })),
   clearFriends: () => set({ friends: [] }),
-  getFriendById: (userId: string): Friend | undefined =>
-    useFriendStore
-      .getState()
-      .friends.find((friend: Friend) => friend.userId === userId),
+  // fetchFriends: () => get().friends,
 }));
