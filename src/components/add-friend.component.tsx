@@ -1,7 +1,7 @@
-import { useEffect } from "react";
 import { useUserStore } from "../stores/user.store";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { sendFriendRequest } from "../services/friend-request.service";
+import ShareButton from "./share-btn.component";
 
 type FormInputs = {
   content: string;
@@ -35,6 +35,8 @@ export default function AddFriend() {
           copy id
         </button>
       </div>
+
+      <ShareButton />
 
       <div>
         <span>Enter a friend ID:</span>
