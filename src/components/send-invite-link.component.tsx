@@ -15,7 +15,7 @@ const ShareButton = ({ title = 'Wii chat friend request', text = 'Hey I want to 
           url: 'invite-link/' + user.id
         });
       } catch (err) {
-        
+
       }
     } else {
       alert('Web Share API is not supported in your browser');
@@ -23,22 +23,12 @@ const ShareButton = ({ title = 'Wii chat friend request', text = 'Hey I want to 
   };
 
   return (
-    // <button 
-    //   onClick={handleShare}
-    //   className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white transition-colors"
-    // >
-    //   <Share size={20} />
-    //   <span>Share</span>
-    // </button>
-
     <Button
-    className="relative right-2 z-10"
-    variant="primary"
-    label="Share link"
-    onClick={handleShare}
+      className="relative right-2 z-10"
+      variant="primary"
+      label="Share link"
+      onClick={handleShare}
     />
-
-    
   );
 };
 
