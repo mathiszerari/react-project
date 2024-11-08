@@ -11,7 +11,7 @@ const ShareButton = ({ title = 'Wii chat friend request', text = 'Hey I want to 
         await navigator.share({
           title,
           text,
-          url: user.id
+          url: 'invite-link/' + user.id
         });
       } catch (err) {
         
