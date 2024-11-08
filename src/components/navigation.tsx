@@ -48,13 +48,20 @@ export default function Navigation() {
             className="md:w-24 w-16"
             onClick={() => console.log("TO DO : DELETE ME")}
           >
-            <Mail size={64} />
+            <Mail
+              className={` ${notifications.length > 0 ? "text-cyan-400" : ""}`}
+              size={64}
+            />
+            <span
+              className={`md:block hidden absolute top-2 right-4 ${
+                notifications.length > 0 ? "text-cyan-400" : ""
+              }`}
+            >
+              {" "}
+              {countUnseenNotifications(notifications)}
+            </span>
           </IconButton>
-          <div className="flex">
-            <Link to="/notifications">Notifications </Link>
 
-            <span> {countUnseenNotifications(notifications)}</span>
-          </div>
           <IconButton className="md:w-32 w-16" onClick={() => handleLogout()}>
             <DoorOpen size={64} />
           </IconButton>
