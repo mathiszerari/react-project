@@ -4,11 +4,15 @@ import { dateFormater } from "../../utils/dateFormater";
 interface MessageCardProps {
   message: Message;
   isSender?: boolean;
+  error?: boolean;
+  handleError?: () => void;
 }
 
 export default function MessageCard({
   message,
   isSender = true,
+  error = false,
+  handleError,
 }: MessageCardProps) {
   return (
     <div
@@ -17,8 +21,8 @@ export default function MessageCard({
       }`}
     >
       <div
-        className={`${
-          isSender ? "bg-cyan-200" : "bg-white"
+        className={`${isSender ? "bg-cyan-200" : "bg-white"} ${
+          error ? "bg-red-100" : ""
         } p-3 rounded-lg w-full ring-1 outline outline-slate-300 shadow-[inset_0px_-4px_16px_rgba(0,0,0,0.2)]`}
       >
         <p>{message.content}</p>
@@ -28,7 +32,16 @@ export default function MessageCard({
           isSender ? "self-end" : "self-start"
         }`}
       >
-        {dateFormater(message.sendAt)}
+        {error ? (
+          <p className="text-red-500">
+            Error{" "}
+            <span onClick={handleError} className="font-bold">
+              resend message
+            </span>{" "}
+          </p>
+        ) : (
+          dateFormater(message.sendAt)
+        )}
       </p>
     </div>
   );
