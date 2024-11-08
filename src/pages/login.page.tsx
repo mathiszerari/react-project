@@ -3,7 +3,6 @@ import { getCurrentUser, loginUser } from "../services/auth.service";
 import AuthForm from "../components/forms/auth.form";
 import { UserDTO } from "../dtos/user.dto";
 import { useUserStore } from "../stores/user.store";
-import Button from "../components/buttons/button";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -18,18 +17,12 @@ export default function LoginPage() {
     navigate("/");
   };
   return (
-    <div className="flex flex-col max-w-96 w-full items-center gap-8">
-      <h1>
-        Wii <span className="text-cyan-500 italic">Login</span>
-      </h1>
-      <AuthForm label="Login" submitFn={onSubmit}>
-        <Button
-          className="text-sm"
-          variant="tertiary"
-          label=" Not registered yet ? Register here !"
-          onClick={() => navigate("/register")}
-        />
-      </AuthForm>
-    </div>
+    <>
+      <h1>Connexion</h1>
+      <AuthForm submitFn={onSubmit} />
+      <button onClick={() => navigate("/register")}>
+        Pas encore inscrit ?
+      </button>
+    </>
   );
 }
