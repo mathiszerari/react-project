@@ -17,22 +17,26 @@ export default function FriendPage() {
       prevRequests.filter((request) => request.id !== friendRequest.id)
     );
   };
-  
+
 
   useEffect(() => {
     loadInitialRequests();
 
     const handleNewFriendRequest = (data: any) => {
-      setFriendRequests(prevRequests => {return [data, ...prevRequests];});
+      setFriendRequests(prevRequests => { return [data, ...prevRequests]; });
     };
-
-    const eventSource = service.eventListener(handleNewFriendRequest, EventName.FRIEND_REQUEST_RECEIVED);
+      const eventSource = service.eventListener(handleNewFriendRequest, EventName.FRIEND_REQUEST_RECEIVED);
 
     return () => {
       eventSource.close();
     };
-  }, []); 
+
+  }, []);
+
+
+
   
+
   async function loadInitialRequests() {
     try {
       const requests = await fetchFriendRequests();
@@ -48,11 +52,11 @@ export default function FriendPage() {
     <div>
       {loading ? <Loader /> : null}
 
-      <div className="border m-6 p-4 bg-blue-100 rounded-3xl">
-        <div className="border rounded-3xl p-4 bg-blue-50">
+      <div className="mx-auto flex justify-center mt-5">
+        <div className="flex lg:flex-row md:flex-row sm:flex-col">
           <AddFriend />
           <div>
-            <span className="mx-16 my-6 text-2xl font-bold">Friends Requests</span>
+            {/* <span className="mx-16 my-6 text-2xl font-bold">Friends Requests</span> */}
 
             {friendRequests.map((request) => (
               <div key={request.id}>
@@ -62,8 +66,6 @@ export default function FriendPage() {
           </div>
         </div>
       </div>
-
-
     </div>
   );
 }
