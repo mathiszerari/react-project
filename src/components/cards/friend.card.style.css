@@ -4,6 +4,10 @@
     @apply cursor-pointer border-4 border-zinc-400 aspect-video rounded-[5%/40%] bg-slate-50 shadow-[inset_0px_-64px_32px_rgba(0,0,0,0.2)] hover:scale-105 transition-all duration-300;
     @apply bg-[length:7px_7px];
   }
+
+  .friend-card:hover {
+    cursor: url("../../assets/images/pointer-cursor.png"), not-allowed;
+  }
 }
 
 .friend-card-red {
