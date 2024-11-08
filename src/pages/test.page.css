@@ -61,7 +61,7 @@ body
 
     border-radius: 10px;
 
-    box-shadow: -10px 10px 0px rgb(108, 137, 138);
+    box-shadow: -10px 10px 0px rgb(150, 179, 180, 0.952);
     margin: auto;
     
     
@@ -74,7 +74,7 @@ body
 .adress-book{
     color: #63C5F7;
     font-size: 2rem;
-    box-shadow: -3px 3px 2px inset rgba(108, 137, 138, 0.822);
+    box-shadow: -3px 3px 2px inset rgba(150, 179, 180, 0.952);
     
     display: flex;
     flex-direction: column;
@@ -150,6 +150,8 @@ body
     background-color: rgb(221, 221, 221);
     color: rgb(68, 68, 68);
     width: 39.7vw;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
     text-align: center;
 }
 
@@ -162,7 +164,7 @@ body
 
     border-radius: 10px;
 
-    box-shadow: -10px 10px 0px rgb(108, 137, 138);
+    box-shadow: -7px 8px 0px rgba(150, 179, 180, 0.952);
     margin: auto;
     
     
@@ -191,6 +193,7 @@ body
 
 .friend-request-card img{
     width: 4rem;
+    margin-right: 1rem;
     border-radius: 10px;
     border: solid 2px rgb(146, 146, 146);
 }
