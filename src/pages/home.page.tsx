@@ -24,11 +24,13 @@ export default function HomePage() {
   }, []);
 
   const navigate = useNavigate();
+
   const redirectUserToChatPage = (
     event: React.MouseEvent<HTMLLIElement>,
     userId: string
   ) => {
-    event.preventDefault();
+    console.log("Enter event");
+
     navigate(`/chats/${userId}`);
   };
 
