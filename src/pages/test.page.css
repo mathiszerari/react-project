@@ -4,11 +4,9 @@
     z-index: 0;
     height: 25vh;
     width: 100vw;
-    /* clip-path: polygon(0 0, 30% 6%, 40% 14%, 60% 14%, 70% 6%, 100% 0, 100% 85%, 100% 100%, 85% 100%, 15% 100%, 0 100%, 0% 85%); */
     position: fixed;
     bottom: 0;
     border-top: solid cyan;
-    /* box-shadow: 0 15px 0 green inset; */
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -59,6 +57,8 @@ body
     box-shadow: 2px 2px 1px rgb(124, 238, 18);
     background-color: aliceblue;
 
+    min-width: 400px;
+
     border-radius: 10px;
 
     box-shadow: -10px 10px 0px rgb(150, 179, 180, 0.952);
@@ -88,6 +88,8 @@ body
 
     border-radius: 10px;
     background-color: aliceblue;
+
+    min-width: 400px;
 }
 
 .adress-book footer
@@ -123,6 +125,8 @@ body
     width: 40vw;
     margin: auto;
     margin-top: 2rem;
+    min-width: 400px;
+
 
     display: flex;
     flex-direction: column;
@@ -140,6 +144,7 @@ body
 
 .add-friend-form input{
     width: 99%;
+    min-width: 350px;
     text-align: center;
     padding: 1rem;
     background-color: aliceblue;
@@ -150,6 +155,7 @@ body
     background-color: rgb(221, 221, 221);
     color: rgb(68, 68, 68);
     width: 39.7vw;
+    min-width: 393px;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     text-align: center;
@@ -158,7 +164,8 @@ body
 /* Friend request list */
 .friend-request-list{
     width: 40vw;
-    height: 50vh;
+    height: 60vh;
+    min-width: 393px;
     box-shadow: 2px 2px 1px rgb(124, 238, 18);
     background-color: aliceblue;
 

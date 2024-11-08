@@ -1,44 +1,33 @@
-
 import './test.page.css';
 
 export default function TestPage() {
     return (
-        <div>
-        
-            <div className='adress-book-rim'>
-                <div className='adress-book'>
-                    <h2 className='smiley'>&#9786;&#9787;</h2>
-                    <h1>Adress Book</h1>
+        <div className='flex justify-center items-center'>
+            <div>
+                <div className='adress-book-rim'>
+                    <div className='adress-book'>
+                        <h2 className='smiley'>&#9786;&#9787;</h2>
+                        <h1>Adress Book</h1>
 
-                    <div className='friend-code'>
-                        <p className='info-message'>This console's Wii number</p>
-                        <div className='flex items-center'>
-                            <p className=''>k54fg15 4525df 4524g5f</p>
-                            {/* <button className='clipboard-logo mx-10'><img src="https://img.icons8.com/?size=100&id=43012&format=png&color=000000" alt="" /></button> */}
+                        <div className='friend-code'>
+                            <p className='info-message'>This console's Wii number</p>
+                            <div className='flex items-center'>
+                                <p className=''>k54fg15 4525df 4524g5f</p>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    {/* <footer className='adress-book-footer'>
-                        <p>Wii</p>
-                    </footer> */}
+                <div className='add-friend-form'>
+                    <form action="">
+                        <div className='add-friend-form-header'>
+                            <p>Wii Number</p>
+                        </div>
+                        <input type="text" placeholder='Enter a Wii Number ...' />
+                    </form>
                 </div>
             </div>
-
-            <br />
-            
-
-            <div className='add-friend-form'>
-                <form action="">
-                    <div className='add-friend-form-header'>
-                        <p>Wii Number</p>
-                    </div>
-                    <input type="text" placeholder='Enter a Wii Number ...' />
-                </form>
-            </div>
-
-            <br />
-
-
+                
             <div className='friend-request-list'>
                 <div className='friend-request-card'>
                     <div className='friend-request-card-info'>
@@ -48,15 +37,10 @@ export default function TestPage() {
                 <button>Accept</button>
                 </div>
             </div>
-
-
-                        <p>dsssss</p>
-
+                
             {/* <footer className='wii-footer'>
                 <div className='footer-notch'></div>
             </footer> */}
-
         </div>
-
     )
 }
