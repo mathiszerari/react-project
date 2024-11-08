@@ -46,15 +46,28 @@ export default function Navigation() {
         <div className="flex flex-row gap-4 sm:gap-16 items-end">
           <IconButton
             className="md:w-24 w-16"
-            onClick={() => console.log("TO DO : DELETE ME")}
+            onClick={() => navigate("/notifications")}
           >
-            <Mail size={64} />
+            <Mail
+              className={` ${
+                countUnseenNotifications(notifications) !== "0"
+                  ? "text-cyan-400"
+                  : ""
+              }`}
+              size={64}
+            />
+            <span
+              className={`md:block hidden absolute top-2 right-4 ${
+                countUnseenNotifications(notifications) !== "0"
+                  ? "text-cyan-400"
+                  : ""
+              }`}
+            >
+              {" "}
+              {countUnseenNotifications(notifications)}
+            </span>
           </IconButton>
-          <div className="flex">
-            <Link to="/notifications">Notifications </Link>
 
-            <span> {countUnseenNotifications(notifications)}</span>
-          </div>
           <IconButton className="md:w-32 w-16" onClick={() => handleLogout()}>
             <DoorOpen size={64} />
           </IconButton>
