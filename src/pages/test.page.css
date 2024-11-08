@@ -1,3 +1,4 @@
+/* Footer */
 .wii-footer{
     background-color: #D3D5DB;
     z-index: 0;
@@ -29,7 +30,6 @@
     border-left: solid cyan;
     border-right: solid cyan;
     box-shadow:  0em 10px 20px -10px rgba(128, 128, 128, 0.568);
-
 }
 
 
@@ -46,9 +46,151 @@
     border-right: solid cyan;
 } */
 
+body
+{
+    background-color: rgb(241, 241, 241);
+}
+
+/* Adress book */
+.adress-book-rim
+{
+    width: 40vw;
+    height: 50vh;
+    box-shadow: 2px 2px 1px rgb(124, 238, 18);
+    background-color: aliceblue;
+
+    border-radius: 10px;
+
+    box-shadow: -10px 10px 0px rgb(108, 137, 138);
+    margin: auto;
+    
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 .adress-book{
     color: #63C5F7;
-    font-weight: bold;
     font-size: 2rem;
+    box-shadow: -3px 3px 2px inset rgba(108, 137, 138, 0.822);
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    width: 98%;
+    height: 95%;
+    margin: auto;
+
+    border-radius: 10px;
+    background-color: aliceblue;
+}
+
+.adress-book footer
+{
+    background-color: gainsboro;
+    width: 99%;
+    position: relative;
+    bottom: 0;
+}
+
+.smiley
+{
+    font-size: 5rem;
+}
+
+.friend-code{
+    color: grey;
+    margin-top: 2rem;
+}
+
+.friend-code .info-message{
+    color: rgb(187, 187, 187);
+    font-size: 1.8rem;
+}
+
+.clipboard-logo img{
+    width: 60%;
+}
+
+/* Friend Form */
+.add-friend-form{
+    background-color: aliceblue;
+    width: 40vw;
+    margin: auto;
+    margin-top: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    border: solid grey;
+    border-radius: 10px;
+    
+    -webkit-box-shadow: 0px 0px 0px 10px aliceblue;
+    -moz-box-shadow: 0px 0px 0px 10px aliceblue;
+    box-shadow: 0px 0px 0px 10px aliceblue;
+}
+
+.add-friend-form input{
+    width: 99%;
+    text-align: center;
+    padding: 1rem;
+    background-color: aliceblue;
+    border-radius: 10px;
+}
+
+.add-friend-form-header{
+    background-color: rgb(221, 221, 221);
+    color: rgb(68, 68, 68);
+    width: 39.7vw;
+    text-align: center;
+}
+
+/* Friend request list */
+.friend-request-list{
+    width: 40vw;
+    height: 50vh;
+    box-shadow: 2px 2px 1px rgb(124, 238, 18);
+    background-color: aliceblue;
+
+    border-radius: 10px;
+
+    box-shadow: -10px 10px 0px rgb(108, 137, 138);
+    margin: auto;
+    
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.friend-request-card{
+    width: 80%;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-bottom: solid 1px #63C5F7;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.friend-request-card-info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.friend-request-card img{
+    width: 4rem;
+    border-radius: 10px;
+    border: solid 2px rgb(146, 146, 146);
 }
