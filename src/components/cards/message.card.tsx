@@ -25,7 +25,7 @@ export default function MessageCard({
           error ? "bg-red-100" : ""
         } p-3 rounded-lg w-full ring-1 outline outline-slate-300 shadow-[inset_0px_-4px_16px_rgba(0,0,0,0.2)]`}
       >
-        <p>{message.content}</p>
+        <MessageText message={message.content} />
       </div>
       <p
         className={`text-sm text-slate-400 ${
@@ -43,6 +43,32 @@ export default function MessageCard({
           dateFormater(message.sendAt)
         )}
       </p>
+    </div>
+  );
+}
+
+interface MessageTextProps {
+  message: string;
+}
+function MessageText({ message }: MessageTextProps) {
+  return (
+    <div>
+      {message.split(" ").map((word, index) => {
+        if (word.startsWith("http://") || word.startsWith("https://")) {
+          return (
+            <a
+              key={`${word}${index}`}
+              href={word}
+              target="_blank"
+              className="text-blue-500 font-bold"
+            >
+              {word + " "}
+            </a>
+          );
+        } else {
+          return <span key={`${word}${index}`}>{word} </span>;
+        }
+      })}
     </div>
   );
 }

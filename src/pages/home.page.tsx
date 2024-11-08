@@ -24,6 +24,7 @@ export default function HomePage() {
   }, []);
 
   const navigate = useNavigate();
+
   const redirectUserToChatPage = (
     event: React.MouseEvent<HTMLLIElement>,
     userId: string
