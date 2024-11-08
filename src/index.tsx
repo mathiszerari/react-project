@@ -13,6 +13,9 @@ import ChatPage from "./pages/chat.page";
 import FriendPage from "./pages/friend.page";
 import ProtectedRoute from "./components/guards/procteded-route.guard";
 import GuestRoute from "./components/guards/guest-route.guard";
+import { MessagesLoader } from "./components/loaders/messages.loader";
+import NotificationListPage from "./pages/notifications.page";
+import { NotificationsLoader } from "./components/loaders/notifications.loader";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +24,7 @@ const router = createBrowserRouter([
     children: [
       {
         element: <ProtectedRoute />,
+        loader: NotificationsLoader,
         children: [
           {
             index: true,
@@ -33,10 +37,15 @@ const router = createBrowserRouter([
           {
             path: "/chats/:receiverId",
             element: <ChatPage />,
+            loader: MessagesLoader,
           },
           {
             path: "/friends",
             element: <FriendPage />,
+          },
+          {
+            path: "/notifications",
+            element: <NotificationListPage />,
           },
         ],
       },

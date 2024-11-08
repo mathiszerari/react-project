@@ -12,7 +12,7 @@ type Actions = {
   getFriendById: (userId: string) => Friend | undefined;
 };
 
-export const useFriendStore = create<States & Actions>((set) => ({
+export const useFriendStore = create<States & Actions>((set, get) => ({
   friends: [],
   setFriends: (friends: Friend[]) => set({ friends }),
   addFriend: (friend: Friend) =>

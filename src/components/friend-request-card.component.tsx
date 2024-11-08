@@ -1,13 +1,30 @@
 import { acceptRequest } from "../services/friend-request.service";
+import { useNotificationStore } from "../stores/notification.store";
 import { FriendRequest } from "../types/friend-request";
+import Notification from "../types/notification";
 import { dateFormater } from "../utils/dateFormater";
 
-export default function FriendRequestCard(request: FriendRequest) {
+export default function FriendRequestCard({request, removeFriendRequest} : {request: FriendRequest, removeFriendRequest : (friendRequest: FriendRequest) => void}) {
+  const { notifications, setNotifications } = useNotificationStore();
 
-  async function acceptFriendRequest() {
+
+  async function updateAcceptedRequestsNotifications() {
     await acceptRequest(request.id.toString());
-
-    window.location.reload();
+    
+    const updatedNotifications = notifications.map((notification: Notification) => {
+      if (notification.id === request.id) {
+        return {
+          ...notification,
+          didIAccept: true,
+          isSeen: true,
+        };
+      }
+      return notification;
+    });
+    
+    setNotifications(updatedNotifications)
+    removeFriendRequest(request)
+  
   }
 
   return (
@@ -21,7 +38,9 @@ export default function FriendRequestCard(request: FriendRequest) {
 
         <button
           className="justify-end border px-6 rounded-full mx-24 bg-green-100"
-          onClick={acceptFriendRequest}>Accept</button>
+          onClick={updateAcceptedRequestsNotifications}>
+          Accept
+        </button>
 
       </div>
     </div>

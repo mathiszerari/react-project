@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useUserStore } from "../stores/user.store";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { sendFriendRequest } from "../services/friend-request.service";
@@ -11,7 +10,7 @@ export default function AddFriend() {
 
   const user = useUserStore();
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+  const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       content: ""
     }

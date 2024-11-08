@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FriendRequestCard from "../components/friend-request-card.component";
-import { eventFetchFriendRequests, fetchFriendRequests } from "../services/friend-request.service";
-import Loader from "../components/loaders/loader.component";
+import { fetchFriendRequests } from "../services/friend-request.service";
+import Loader from "../components/loaders/spinner/loader.component";
 import { FriendRequest } from "../types/friend-request";
 import AddFriend from "../components/add-friend.component";
 
@@ -9,17 +9,25 @@ export default function FriendPage() {
   const [friendRequests, setFriendRequests] = useState<FriendRequest[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const removeFriendRequest = (friendRequest: FriendRequest) => {
+    setFriendRequests((prevRequests) =>
+      prevRequests.filter((request) => request.id !== friendRequest.id)
+    );
+  };
+  
+
   useEffect(() => {
     loadInitialRequests();
-    const handleNewFriendRequest = (data: FriendRequest) => {
+
+    const handleNewFriendRequest = (data: any) => {
       setFriendRequests(prevRequests => {return [data, ...prevRequests];});
     };
-
-    const eventSource = eventFetchFriendRequests(handleNewFriendRequest);
-
-    return () => {
-      eventSource.close();
-    };
+    //
+    // const eventSource = eventFetchFriendRequests(handleNewFriendRequest);
+    //
+    // return () => {
+    //   eventSource.close();
+    // };
   }, []); 
   
   async function loadInitialRequests() {
@@ -44,11 +52,15 @@ export default function FriendPage() {
             <span className="mx-16 my-6 text-2xl font-bold">Friends Requests</span>
 
             {friendRequests.map((request) => (
-              <FriendRequestCard key={request.id} {...request} />
+              <div key={request.id}>
+                <FriendRequestCard request={request} removeFriendRequest={removeFriendRequest} />
+              </div>
             ))}
           </div>
         </div>
       </div>
+
+
     </div>
   );
 }

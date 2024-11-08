@@ -2,24 +2,36 @@ import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../services/auth.service";
 import { useFriendStore } from "../stores/friend.store";
 import { useUserStore } from "../stores/user.store";
-import IconButton from "./buttons/icon.button";
 
+import IconButton from "./buttons/icon.button";
 import { DoorOpen } from "lucide-react";
 import { Users } from "lucide-react";
 import { Mail } from "lucide-react";
 
+import { countUnseenNotifications } from "../utils/count-unseen-notifications";
+import { useEffect } from "react";
+import { useNotificationStore } from "../stores/notification.store";
+
+
 export default function Navigation() {
   const { clearUser } = useUserStore();
   const { clearFriends } = useFriendStore();
+  const { notifications } = useNotificationStore();
+
   const handleLogout = () => {
     clearUser();
     clearFriends();
     logoutUser();
     navigate("/login");
   };
+
   const navigate = useNavigate();
 
   const handleNotifications = () => {};
+    
+  useEffect(() => {
+    countUnseenNotifications(notifications);
+  }, [notifications]);
   return (
     <div className="w-full sticky bottom-0 border-t-2 border-t-cyan-500 shadow-[inset_0px_24px_64px_rgba(0,0,0,0.3)] bg-slate-50">
       <div className="max-w-[1440px] w-full flex justify-between items-center py-8 m-auto">
@@ -44,11 +56,15 @@ export default function Navigation() {
           >
             <Mail size={64} />
           </IconButton>
+          <div className="flex">
+        <Link to="/notifications">Notifications </Link>
+
+        <span> {countUnseenNotifications(notifications)}</span>
+      </div>
           <IconButton className="md:w-32 w-16" onClick={() => handleLogout()}>
             <DoorOpen size={64} />
           </IconButton>
         </div>
       </div>
-    </div>
   );
 }
