@@ -49,12 +49,18 @@ export default function Navigation() {
             onClick={() => navigate("/notifications")}
           >
             <Mail
-              className={` ${notifications.length > 0 ? "text-cyan-400" : ""}`}
+              className={` ${
+                countUnseenNotifications(notifications) !== "0"
+                  ? "text-cyan-400"
+                  : ""
+              }`}
               size={64}
             />
             <span
               className={`md:block hidden absolute top-2 right-4 ${
-                notifications.length > 0 ? "text-cyan-400" : ""
+                countUnseenNotifications(notifications) !== "0"
+                  ? "text-cyan-400"
+                  : ""
               }`}
             >
               {" "}
