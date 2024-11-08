@@ -4,10 +4,13 @@ import { fetchFriendRequests } from "../services/friend-request.service";
 import Loader from "../components/loaders/spinner/loader.component";
 import { FriendRequest } from "../types/friend-request";
 import AddFriend from "../components/add-friend.component";
+import { useNotificationStore } from "../stores/notification.store";
+import { EventName } from "../services/notification.service";
 
 export default function FriendPage() {
   const [friendRequests, setFriendRequests] = useState<FriendRequest[]>([]);
   const [loading, setLoading] = useState(true);
+  const { service } = useNotificationStore();
 
   const removeFriendRequest = (friendRequest: FriendRequest) => {
     setFriendRequests((prevRequests) =>
@@ -22,12 +25,12 @@ export default function FriendPage() {
     const handleNewFriendRequest = (data: any) => {
       setFriendRequests(prevRequests => {return [data, ...prevRequests];});
     };
-    //
-    // const eventSource = eventFetchFriendRequests(handleNewFriendRequest);
-    //
-    // return () => {
-    //   eventSource.close();
-    // };
+
+    const eventSource = service.eventListener(handleNewFriendRequest, EventName.FRIEND_REQUEST_RECEIVED);
+
+    return () => {
+      eventSource.close();
+    };
   }, []); 
   
   async function loadInitialRequests() {
