@@ -2,6 +2,7 @@ import { useUserStore } from "../stores/user.store";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { sendFriendRequest } from "../services/friend-request.service";
 import ShareButton from "./send-invite-link.component";
+import { useState } from "react";
 
 type FormInputs = {
   content: string;
@@ -9,14 +10,43 @@ type FormInputs = {
 
 export default function AddFriend() {
   const user = useUserStore();
+  const [error, setError] = useState<string | null>(null);
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       content: ""
     }
-  })
+  });
+
   const onSubmit: SubmitHandler<FormInputs> = async (input) => {
-    await sendFriendRequest(input.content);
-    reset();
+    try {
+      await sendFriendRequest(input.content);
+      reset();
+    } catch (err) {
+      console.error(err);
+      setError((err as Error).message);
+    }
+  }
+
+  const sendFriendRequest = async (receiverId: string) => {
+    try {
+      const randomuuid = crypto.randomUUID(); 
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/social/friend-request/${randomuuid}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ receiverId: receiverId }),
+      });
+  
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+      }
+    } catch (error) {
+      console.error('Error sending friend request:', error);
+      throw error;
+    }
   }
 
   return (
@@ -42,6 +72,7 @@ export default function AddFriend() {
                  placeholder="Enter a friend ID" {...register('content', { required: true })} />
           <button type="submit">Send friend request</button>
         </form>
+        {error && <div className="text-red-500">{error}</div>}
       </div>
     </div>
   );
