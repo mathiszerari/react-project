@@ -1,21 +1,19 @@
 import { useUserStore } from "../stores/user.store";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { sendFriendRequest } from "../services/friend-request.service";
+import ShareButton from "./invit-link.component";
 
 type FormInputs = {
   content: string;
 }
 
 export default function AddFriend() {
-
   const user = useUserStore();
-
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
       content: ""
     }
   })
-
   const onSubmit: SubmitHandler<FormInputs> = async (input) => {
     await sendFriendRequest(input.content);
     reset();
@@ -35,16 +33,16 @@ export default function AddFriend() {
         </button>
       </div>
 
+      <ShareButton />
+
       <div>
         <span>Enter a friend ID:</span>
-
         <form onSubmit={handleSubmit(onSubmit)}>
           <input type="text"
                  placeholder="Enter a friend ID" {...register('content', { required: true })} />
           <button type="submit">Send friend request</button>
         </form>
       </div>
-
     </div>
   );
 }
