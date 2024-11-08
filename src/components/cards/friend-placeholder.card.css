@@ -1,0 +1,9 @@
+.friend-card-placeholder {
+  @apply border-4 border-zinc-400 aspect-video rounded-[5%/40%] bg-slate-50 shadow-[inset_0px_-64px_32px_rgba(0,0,0,0.2)] cursor-not-allowed;
+  @apply bg-gradient-to-b from-zinc-300 via-zinc-300 to-zinc-300;
+  @apply bg-[length:7px_7px];
+}
+
+.friend-card-placeholder:hover {
+  cursor: url("../../assets/images/block-cursor.png"), not-allowed;
+}
