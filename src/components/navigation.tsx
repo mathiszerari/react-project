@@ -27,7 +27,7 @@ export default function Navigation() {
   }, [notifications]);
 
   return (
-    <div className="w-full sticky bottom-0 border-t-2 border-t-cyan-500 shadow-[inset_0px_24px_64px_rgba(0,0,0,0.3)] bg-slate-50">
+    <div className="w-full sticky bottom-0 border-t-2 border-t-cyan-500 shadow-[inset_0px_24px_64px_rgba(0,0,0,0.3)] bg-slate-50 z-50">
       <div className="max-w-[1440px] w-full flex justify-between items-center py-8 m-auto">
         <div className="flex flex-row gap-4 sm:gap-16 items-end">
           <IconButton className="md:w-32 w-16" onClick={() => navigate("/")}>
