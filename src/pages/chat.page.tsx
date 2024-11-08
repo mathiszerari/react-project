@@ -87,6 +87,9 @@ export default function ChatPage() {
   };
 
   useEffect(() => {
+    if (!receiverId) return;
+
+    setCurrentFriend(getFriendById(receiverId));
     setMessages(initialMessages);
 
     const handleNewMessage = (message: Message) => {
