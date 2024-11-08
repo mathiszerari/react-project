@@ -4,6 +4,7 @@ import { fetchFriendRequests } from "../services/friend-request.service";
 import Loader from "../components/loaders/spinner/loader.component";
 import { FriendRequest } from "../types/friend-request";
 import AddFriend from "../components/add-friend.component";
+import "./friend.page.css"
 
 export default function FriendPage() {
   const [friendRequests, setFriendRequests] = useState<FriendRequest[]>([]);
