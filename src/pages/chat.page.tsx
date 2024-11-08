@@ -11,7 +11,10 @@ import { Friend } from "../types/friend";
 import { useMessageStore } from "../stores/message.store";
 import { useUserStore } from "../stores/user.store";
 
-import { MessageService } from "../services/message.service";
+import {
+  FalseMessageService,
+  MessageService,
+} from "../services/message.service";
 import { MessageAdapter } from "../adapters/message.adapter";
 import { BadRequestError } from "../errors/bad-request.error";
 import { useNotificationStore } from "../stores/notification.store";
@@ -36,12 +39,14 @@ export default function ChatPage() {
 
   const { service } = useNotificationStore();
 
-  // const messageService : MessageAdapter = new FalseMessageService(notificationService);
-  const messageService: MessageAdapter = new MessageService();
+  const messageService: MessageAdapter = new FalseMessageService();
+  // const messageService: MessageAdapter = new MessageService();
 
   const { getFriendById } = useFriendStore();
 
   const [currentFriend, setCurrentFriend] = useState<Friend | undefined>();
+
+  const [charactersLeft, setCharactersLeft] = useState(MAX_MESSAGE_LENGTH);
 
   const {
     register,
@@ -78,6 +83,7 @@ export default function ChatPage() {
     };
     addMessage(message);
     await sendMessage(message);
+    setCharactersLeft(MAX_MESSAGE_LENGTH);
     reset();
   };
 
@@ -117,8 +123,6 @@ export default function ChatPage() {
     console.log(messages);
   }, [messages]);
 
-  const [charactersLeft, setCharactersLeft] = useState(MAX_MESSAGE_LENGTH);
-
   return (
     <div
       ref={messagesBox}
@@ -133,6 +137,8 @@ export default function ChatPage() {
             key={index}
             message={message}
             isSender={message.receiverId === receiverId}
+            error={message.error}
+            handleError={() => retryMessage(message)}
           />
         ))}
       </div>

@@ -17,8 +17,8 @@ export const useMessageStore = create<MessageStore>((set) => ({
   updateErrorLastMessage: (error: boolean) =>
     set((state) => {
       const messages = [...state.messages];
-      messages[messages.length - 1] = {
-        ...messages[messages.length - 1],
+      messages[0] = {
+        ...messages[0],
         error,
       };
       return { messages };
