@@ -2,6 +2,7 @@ import { useUserStore } from "../stores/user.store";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { sendFriendRequest } from "../services/friend-request.service";
 import ShareButton from "./send-invite-link.component";
+import Button from "./buttons/button";
 
 type FormInputs = {
   content: string;
@@ -58,11 +59,17 @@ export default function AddFriend() {
                 </div>
               </div>
               <div className="flex flex-row gap-4">
-                <button
+                {/* <button
                   type="button"
                   onClick={() => navigator.clipboard.writeText(user.id)}>
                   copy
-                </button>
+                </button> */}
+                <Button
+                    className="relative right-2 z-10"
+                    variant="primary"
+                    label="Copy"
+                    onClick={() => navigator.clipboard.writeText(user.id)}
+                  />
                 <ShareButton />
               </div>
             </div>
@@ -76,7 +83,14 @@ export default function AddFriend() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <input type="text"
                   placeholder="Enter a Wii Number" {...register('content', { required: true })} />
-            <button type="submit" className="border-top w-full">Send</button>
+            {/* <button type="submit" className="border-top w-full">Send</button> */}
+            <Button
+              className="relative right-2 z-10 mb-2"
+              variant="primary"
+              label="send"
+              type="submit"
+              // onClick={() => navigator.clipboard.writeText(user.id)}
+            />
           </form>
         </div>
       </div>
